@@ -1,0 +1,36 @@
+before_script:
+  # Init PHP
+  - phpenv rehash
+  - phpenv config-rm xdebug.ini || true
+  - echo 'memory_limit = 2048M' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - echo 'always_populate_raw_post_data = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+   # use Composer v1 with PHP <= 7.3, Composer v2 for >= 7.3
+  - if [ $(php -r 'echo (int) version_compare(phpversion(), "7.3.0", "<=");') = "1" ] ; then composer self-update --1; else composer self-update --2; fi
+  - composer --version
+
+  # Composer
+  - composer validate
+  - if [[ $DB == PGSQL ]]; then composer require --no-update silverstripe/postgresql:^2 --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_RECIPE_CORE ]]; then composer require silverstripe/recipe-core:$REQUIRE_RECIPE_CORE --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_RECIPE_CMS ]]; then composer require silverstripe/recipe-cms:$REQUIRE_RECIPE_CMS --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_RECIPE_INSTALLER ]]; then composer require silverstripe/installer:$REQUIRE_RECIPE_INSTALLER --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_RECIPE_TESTING ]]; then composer require silverstripe/recipe-testing:$REQUIRE_RECIPE_TESTING --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_FRAMEWORKTEST ]]; then composer require silverstripe/frameworktest:$REQUIRE_FRAMEWORKTEST --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_EXTRA_LIBS ]] ; then composer require --no-update $REQUIRE_EXTRA_LIBS ; fi
+  - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
+  - composer show
+
+  # Remove preinstalled Chrome (google-chrome)
+  # this would conflict with our chromium-browser installation
+  # and its version is incompatible with chromium-chromedriver
+  - if [[ $BEHAT_TEST ]]; then sudo apt-get remove -y --purge google-chrome-stable || true; fi
+
+  # Start behat services
+  - if [[ $BEHAT_TEST ]]; then mkdir artifacts; fi
+  - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; fi
+  - if [[ $BEHAT_TEST ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi
+  - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi
+  - if [[ $BEHAT_TEST ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
+
+  # Install NPM dependencies
+  - if [[ $NPM_TEST ]]; then rm -rf client/dist && nvm install && nvm use && npm install -g yarn && yarn install --network-concurrency 1 && (cd vendor/silverstripe/admin && yarn install --network-concurrency 1) && yarn run build; fi
