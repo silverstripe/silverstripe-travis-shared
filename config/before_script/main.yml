@@ -16,7 +16,7 @@ before_script:
   - if [[ $REQUIRE_RECIPE_INSTALLER ]]; then composer require silverstripe/installer:$REQUIRE_RECIPE_INSTALLER --no-update --prefer-dist; fi
   - if [[ $REQUIRE_RECIPE_TESTING ]]; then composer require silverstripe/recipe-testing:$REQUIRE_RECIPE_TESTING --no-update --prefer-dist; fi
   - if [[ $REQUIRE_FRAMEWORKTEST ]]; then composer require silverstripe/frameworktest:$REQUIRE_FRAMEWORKTEST --no-update --prefer-dist; fi
-  - if [[ $REQUIRE_EXTRA_LIBS ]] ; then composer require --no-update $REQUIRE_EXTRA_LIBS ; fi
+  - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update $REQUIRE_EXTRA; fi
   - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
   - composer show
 
