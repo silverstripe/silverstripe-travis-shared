@@ -1,9 +1,5 @@
-script:
-  - if [[ $PHPUNIT_TEST ]]; then composer run-script phpunit; fi
-  - if [[ $PHPCS_TEST ]]; then composer run-script phpcs; fi
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then composer run-script phpunit-coverage; fi
-  - if [[ $BEHAT_TEST ]] && [[ $BEHAT_SUITE ]]; then vendor/bin/behat $BEHAT_SUITE; fi
-  - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
-  - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi
-  - if [[ $NPM_TEST ]]; then yarn run test; fi
-  - if [[ $NPM_TEST ]]; then yarn run lint; fi
+import:
+  - config/script/phpunit.yml
+  - config/script/behat.yml
+  - config/script/phpcs.yml
+  - config/script/npm.yml
