@@ -9,10 +9,10 @@ before_script:
   - if [[ $DB == PGSQL ]]; then composer require --no-update silverstripe/postgresql:^2 --no-update --prefer-dist; fi
   - if [[ $REQUIRE_RECIPE_CORE ]]; then composer require silverstripe/recipe-core:$REQUIRE_RECIPE_CORE --no-update --prefer-dist; fi
   - if [[ $REQUIRE_RECIPE_CMS ]]; then composer require silverstripe/recipe-cms:$REQUIRE_RECIPE_CMS --no-update --prefer-dist; fi
-  - if [[ $REQUIRE_RECIPE_INSTALLER ]]; then composer require silverstripe/installer:$REQUIRE_RECIPE_INSTALLER --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_INSTALLER ]]; then composer require silverstripe/installer:$REQUIRE_INSTALLER --no-update --prefer-dist; fi
   - if [[ $REQUIRE_RECIPE_TESTING ]]; then composer require silverstripe/recipe-testing:$REQUIRE_RECIPE_TESTING --no-update --prefer-dist; fi
   - if [[ $REQUIRE_FRAMEWORKTEST ]]; then composer require silverstripe/frameworktest:$REQUIRE_FRAMEWORKTEST --no-update --prefer-dist; fi
-  - if [[ $REQUIRE_CWP_STARTERTHEME ]]; then composer require cwp/starter-theme:$REQUIRE_CWP_STARTERTHEME --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_CWP_STARTER_THEME ]]; then composer require cwp/starter-theme:$REQUIRE_CWP_STARTER_THEME --no-update --prefer-dist; fi
   - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update $REQUIRE_EXTRA; fi
 
   - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
