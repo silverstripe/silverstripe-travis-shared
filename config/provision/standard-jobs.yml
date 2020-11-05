@@ -1,0 +1,3 @@
+import:
+  - config/provision/standard.yml
+  - config/jobs/installer.yml

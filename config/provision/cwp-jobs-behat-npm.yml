@@ -1,4 +1,4 @@
 import:
-  - config/provision/module-cwp-cms-jobs.yml
+  - config/provision/cwp-jobs.yml
   - config/jobs/recipe-cms-behat.yml
   - config/jobs/recipe-cms-npm.yml
