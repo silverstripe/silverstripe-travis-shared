@@ -1,2 +1,2 @@
 script:
-  - if [[ $PHPCS_TEST ]]; then composer run-script phpcs; fi
+  - if [[ $PHPCS_TEST ]]; then vendor/bin/phpcs; fi
