@@ -1,0 +1,7 @@
+jobs:
+  include:
+    - php: 7.4
+      env:
+        - DB=MYSQL
+        - REQUIRE_RECIPE_CMS=4.6.x-dev
+        - NPM_TEST=1

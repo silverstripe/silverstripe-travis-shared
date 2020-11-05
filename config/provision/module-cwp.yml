@@ -3,4 +3,4 @@ import:
 
 env:
   global:
-    - REQUIRE_CWP_STARTERTHEME=^2
+    - REQUIRE_CWP_STARTER_THEME=^2
