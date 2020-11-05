@@ -1,0 +1,2 @@
+script:
+  - if [[ $PHPCS_TEST ]]; then composer run-script phpcs; fi

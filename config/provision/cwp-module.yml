@@ -1,0 +1,6 @@
+import:
+  - config/provision/base.yml
+
+env:
+  global:
+    - REQUIRE_CWP_STARTERTHEME=^2

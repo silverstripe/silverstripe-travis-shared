@@ -1,0 +1,17 @@
+language: php
+
+dist: xenial
+
+# xvfb needs to be in this file, not in behat.yml as travis shared config does not currently seem to merge 'services'
+services:
+  - mysql
+  - postgresql
+  - xvfb
+
+env:
+  global:
+    - SS_ENVIRONMENT_TYPE=dev
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files

@@ -1,0 +1,3 @@
+import:
+  - config/provision/cwp-module.yml
+  - config/jobs/recipe-cms.yml

@@ -1,0 +1,3 @@
+before_script:
+  # Install NPM dependencies
+  - if [[ $NPM_TEST ]]; then rm -rf client/dist && nvm install && nvm use && npm install -g yarn && yarn install --network-concurrency 1 && (cd vendor/silverstripe/admin && yarn install --network-concurrency 1) && yarn run build; fi
