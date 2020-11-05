@@ -24,6 +24,6 @@ jobs:
     - php: nightly
       env:
         - DB=MYSQL
+        - REQUIRE_RECIPE_CMS=4.x-dev
         - PHPUNIT_TEST=1
         - COMPOSER_INSTALL_ARG=--ignore-platform-reqs
-        - REQUIRE_RECIPE_CMS=4.x-dev
