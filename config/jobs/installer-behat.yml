@@ -4,4 +4,5 @@ jobs:
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER=4.6.x-dev
+        - REQUIRE_RECIPE_TESTING=^1
         - BEHAT_TEST=1
