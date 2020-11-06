@@ -1,5 +1,6 @@
+# WARNING: the order is important and inverted from how they will be executed!
 import:
-  - config/before_script/phpenv.yml
-  - config/before_script/composer.yml
-  - config/before_script/behat.yml
   - config/before_script/npm.yml
+  - config/before_script/behat.yml
+  - config/before_script/composer.yml
+  - config/before_script/phpenv.yml
