@@ -1,0 +1,3 @@
+import:
+  - config/provision/cwp-jobs-range.yml
+  - config/jobs/recipe-cms-range-npm.yml

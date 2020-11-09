@@ -1,0 +1,29 @@
+jobs:
+  include:
+    - php: 7.1
+      env:
+        - DB=MYSQL
+        - REQUIRE_RECIPE_CMS="$REQUIRE_RECIPE"
+        - PHPUNIT_TEST=1
+    - php: 7.2
+      env:
+        - DB=PGSQL
+        - REQUIRE_RECIPE_CMS="$REQUIRE_RECIPE"
+        - PHPUNIT_TEST=1
+    - php: 7.3
+      env:
+        - DB=MYSQL
+        - REQUIRE_RECIPE_CMS="$REQUIRE_RECIPE"
+        - PHPUNIT_TEST=1
+        - PHPCS_TEST=1
+    - php: 7.4
+      env:
+        - DB=MYSQL
+        - REQUIRE_RECIPE_CMS="$REQUIRE_RECIPE"
+        - PHPUNIT_COVERAGE_TEST=1
+    - php: nightly
+      env:
+        - DB=MYSQL
+        - REQUIRE_RECIPE_CMS="$REQUIRE_RECIPE"
+        - PHPUNIT_TEST=1
+        - COMPOSER_INSTALL_ARG=--ignore-platform-reqs
