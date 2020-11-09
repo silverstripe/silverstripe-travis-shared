@@ -7,7 +7,7 @@ jobs:
         - PHPUNIT_TEST=1
     - php: 7.2
       env:
-        - DB=PGSQL
+        - DB=MYSQL # not using PGSQL as recipe/cms is used by cwp modules for testing
         - REQUIRE_RECIPE_CMS="$REQUIRE_RECIPE 4.6.x-dev"
         - PHPUNIT_TEST=1
     - php: 7.3
