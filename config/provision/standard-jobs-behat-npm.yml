@@ -1,4 +1,0 @@
-import:
-  - config/provision/standard-jobs.yml
-  - config/jobs/standard-behat.yml
-  - config/jobs/standard-npm.yml

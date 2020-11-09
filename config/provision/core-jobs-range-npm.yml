@@ -1,0 +1,3 @@
+import:
+  - config/provision/core-jobs-range.yml
+  - config/jobs/recipe-core-range-npm.yml

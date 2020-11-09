@@ -1,0 +1,4 @@
+import:
+  - config/provision/standard-jobs-range.yml
+  - config/jobs/standard-range-behat.yml
+  - config/jobs/standard-range-npm.yml

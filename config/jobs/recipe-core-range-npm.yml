@@ -3,5 +3,5 @@ jobs:
     - php: 7.4
       env:
         - DB=MYSQL
-        - REQUIRE_INSTALLER=4.6.x-dev
+        - REQUIRE_RECIPE_CORE="$REQUIRE_RECIPE 4.6.x-dev"
         - NPM_TEST=1

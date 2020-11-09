@@ -1,0 +1,3 @@
+import:
+  - config/provision/standard-jobs-range.yml
+  - config/jobs/installer-range-npm.yml

@@ -1,3 +1,0 @@
-import:
-  - config/provision/standard-jobs.yml
-  - config/jobs/installer-behat.yml

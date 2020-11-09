@@ -1,0 +1,3 @@
+import:
+  - config/provision/standard-jobs-fixed.yml
+  - config/jobs/installer-fixed-behat.yml
