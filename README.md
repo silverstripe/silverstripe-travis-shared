@@ -24,7 +24,7 @@ import:
   - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range.yml
 ```
 
-### Use a generic jobs matrix with a fixed recipe verson and with behat and npm on a CWP module
+### Use a generic jobs matrix with a fixed recipe version of 4.x-dev and with behat and npm on a CWP module
 
 ```yml
 version: ~> 1.0
