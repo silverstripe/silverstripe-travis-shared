@@ -8,20 +8,23 @@ We may introduce breaking changes with no warning.
 
 ## Example module .travis.yml files
 
-### Use a generic jobs matrix on a standard module
+### Use a generic jobs matrix on a standard module with a range of recipe versions
+
+This includes a minimum recipe version of 4.6.x-dev to match a composer requirement of a required core module of ^4.6
 
 ```yml
 version: ~> 1.0
 
 env:
   global:
-    - COMPOSER_ROOT_VERSION=4.x-dev
+    - COMPOSER_ROOT_VERSION="1.6.x-dev"
+    - REQUIRE_RECIPE=4.6.x-dev
 
 import:
-  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs.yml
+  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range.yml
 ```
 
-### Use a generic jobs matrix with behat and npm on a CWP module
+### Use a generic jobs matrix with a fixed recipe verson and with behat and npm on a CWP module
 
 ```yml
 version: ~> 1.0
@@ -30,9 +33,10 @@ env:
   global:
     - COMPOSER_ROOT_VERSION=2.x-dev
     - REQUIRE_EXTRA="silverstripe/fulltextsearch:^3"
+    - REQUIRE_RECIPE=4.x-dev
 
 import:
-  - silverstripe/silverstripe-travis-shared:config/provision/cwp-jobs-behat-npm.yml
+  - silverstripe/silverstripe-travis-shared:config/provision/cwp-jobs-fix-behat-npm.yml
 ```
 
 ### Define a custom jobs matrix on a standard module and use silverstripe/recipe-core
