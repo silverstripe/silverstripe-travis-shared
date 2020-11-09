@@ -8,6 +8,15 @@ We may introduce breaking changes with no warning.
 
 ## Example module .travis.yml files
 
+### Minimal config for a standard module with a range of recipe versions
+
+```yml
+version: ~> 1.0
+
+import:
+  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range.yml
+```
+
 ### Use a generic jobs matrix on a standard module with a range of recipe versions
 
 This includes a minimum recipe version of 4.6.x-dev to match a composer requirement of a required core module of ^4.6
