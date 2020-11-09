@@ -1,6 +1,6 @@
 jobs:
   include:
-    - php: 7.4
+    - php: 7.3
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER=4.6.x-dev
