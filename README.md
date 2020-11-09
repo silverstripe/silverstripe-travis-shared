@@ -36,7 +36,7 @@ env:
     - REQUIRE_RECIPE=4.x-dev
 
 import:
-  - silverstripe/silverstripe-travis-shared:config/provision/cwp-jobs-fix-behat-npm.yml
+  - silverstripe/silverstripe-travis-shared:config/provision/cwp-jobs-fixed-behat-npm.yml
 ```
 
 ### Define a custom jobs matrix on a standard module and use silverstripe/recipe-core
