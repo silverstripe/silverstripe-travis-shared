@@ -16,3 +16,10 @@ env:
 cache:
   directories:
     - $HOME/.composer/cache/files
+
+addons:
+  apt:
+    packages:
+      - tidy
+      - chromium-chromedriver
+      - chromium-browser
