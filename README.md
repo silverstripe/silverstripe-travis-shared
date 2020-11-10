@@ -43,6 +43,7 @@ env:
     - COMPOSER_ROOT_VERSION=2.x-dev
     - REQUIRE_EXTRA="silverstripe/fulltextsearch:^3 silverstripe/spellcheck:^2"
     - REQUIRE_RECIPE=4.x-dev
+    - BEHAT_SUITE="@magical-content"
 
 import:
   - silverstripe/silverstripe-travis-shared:config/provision/cwp-jobs-fixed-behat-npm.yml
@@ -56,6 +57,7 @@ version: ~> 1.0
 env:
   global:
     - COMPOSER_ROOT_VERSION=4.6.x-dev
+    - BEHAT_SUITE="@magical-content"
 
 import:
   - silverstripe/silverstripe-travis-shared:config/provision/core.yml
