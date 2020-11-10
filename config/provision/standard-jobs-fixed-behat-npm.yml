@@ -1,4 +1,4 @@
 import:
   - config/provision/standard-jobs-fixed.yml
-  - config/jobs/standard-fixed-behat.yml
-  - config/jobs/standard-fixed-npm.yml
+  - config/jobs/installer-fixed-behat.yml
+  - config/jobs/installer-fixed-npm.yml
