@@ -1,3 +1,8 @@
 before_script:
   # Install NPM dependencies
-  - if [[ $NPM_TEST ]]; then rm -rf client/dist && nvm install && nvm use && npm install -g yarn && yarn install --network-concurrency 1 && (cd vendor/silverstripe/admin && yarn install --network-concurrency 1) && yarn run build; fi
+  # Will use node 10 by default if $NVM_NODE is undefined, which is ideal
+  # To use an old version of node for a module, define the following in .travis.yml
+  # env:
+  #   global:
+  #     - NVM_NODE="6"
+  - if [[ $NPM_TEST ]]; then rm -rf client/dist && nvm install $NVM_NODE && nvm use $NVM_NODE && npm install -g yarn && yarn install --network-concurrency 1 && (cd vendor/silverstripe/admin && yarn install --network-concurrency 1) && yarn run build; fi
