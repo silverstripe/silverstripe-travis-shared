@@ -4,5 +4,5 @@ before_script:
   # To use an old version of node for a module, define the following in .travis.yml
   # env:
   #   global:
-  #     - TRAVIS_NODE_VERSION="6"
+  #     - TRAVIS_NODE_VERSION=6
   - if [[ $NPM_TEST ]]; then rm -rf client/dist && nvm install $TRAVIS_NODE_VERSION && nvm use $TRAVIS_NODE_VERSION && npm install -g yarn && yarn install --network-concurrency 1 && (cd vendor/silverstripe/admin && yarn install --network-concurrency 1) && yarn run build; fi

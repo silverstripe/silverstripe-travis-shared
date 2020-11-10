@@ -26,7 +26,7 @@ version: ~> 1.0
 
 env:
   global:
-    - COMPOSER_ROOT_VERSION="1.6.x-dev"
+    - COMPOSER_ROOT_VERSION=1.6.x-dev
     - REQUIRE_RECIPE=4.6.x-dev
 
 import:
@@ -41,7 +41,7 @@ version: ~> 1.0
 env:
   global:
     - COMPOSER_ROOT_VERSION=2.x-dev
-    - REQUIRE_EXTRA="silverstripe/fulltextsearch:^3"
+    - REQUIRE_EXTRA="silverstripe/fulltextsearch:^3 silverstripe/spellcheck:^2"
     - REQUIRE_RECIPE=4.x-dev
 
 import:
@@ -72,4 +72,21 @@ jobs:
         - DB=MYSQL
         - REQUIRE_CORE=4.x-dev
         - BEHAT_TEST=1
+```
+
+### Use Node 6 in an NPM test
+
+```yml
+version: ~> 1.0
+
+env:
+  global:
+    - COMPOSER_ROOT_VERSION=4.6.x-dev
+
+import:
+  - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-npm-range.yml
+
+env:
+  global:
+    - TRAVIS_NODE_VERSION=6
 ```
