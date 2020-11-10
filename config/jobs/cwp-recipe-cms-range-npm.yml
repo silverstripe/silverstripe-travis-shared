@@ -3,5 +3,5 @@ jobs:
     - php: 7.4
       env:
         - DB=MYSQL
-        - REQUIRE_RECIPE_CMS="$REQUIRE_RECIPE"
+        - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE 4.6.x-dev"
         - NPM_TEST=1

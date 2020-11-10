@@ -1,3 +1,3 @@
 import:
   - config/provision/cwp-jobs-fixed.yml
-  - config/jobs/recipe-cms-fixed-behat.yml
+  - config/jobs/cwp-recipe-cms-fixed-behat.yml

@@ -3,6 +3,6 @@ jobs:
     - php: 7.3
       env:
         - DB=MYSQL
-        - REQUIRE_RECIPE_CMS="$REQUIRE_RECIPE"
+        - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE 4.6.x-dev"
         - REQUIRE_RECIPE_TESTING=^1
         - BEHAT_TEST=1
