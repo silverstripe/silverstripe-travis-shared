@@ -10,10 +10,10 @@ before_script:
   - if [[ $REQUIRE_RECIPE_CORE ]]; then composer require silverstripe/recipe-core="$REQUIRE_RECIPE_CORE" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_CWP_CWP_RECIPE_CMS ]]; then composer require cwp/cwp-recipe-cms="$REQUIRE_CWP_CWP_RECIPE_CMS" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_INSTALLER ]]; then composer require silverstripe/installer="$REQUIRE_INSTALLER" --no-update --prefer-dist; fi
-  - if [[ $REQUIRE_RECIPE_TESTING ]]; then composer require silverstripe/recipe-testing="$REQUIRE_RECIPE_TESTING" --no-update --prefer-dist; fi
-  - if [[ $REQUIRE_FRAMEWORKTEST ]]; then composer require silverstripe/frameworktest="$REQUIRE_FRAMEWORKTEST" --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_RECIPE_TESTING ]]; then composer require silverstripe/recipe-testing="$REQUIRE_RECIPE_TESTING" --dev --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_FRAMEWORKTEST ]]; then composer require silverstripe/frameworktest="$REQUIRE_FRAMEWORKTEST" --dev --no-update --prefer-dist; fi
   - if [[ $REQUIRE_CWP_STARTER_THEME ]]; then composer require cwp/starter-theme="$REQUIRE_CWP_STARTER_THEME" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update $REQUIRE_EXTRA; fi
 
-  - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
+  - composer update --prefer-source --include-dev --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
   - composer show
