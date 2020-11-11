@@ -35,6 +35,8 @@ import:
 
 ### Use a generic jobs matrix with a fixed recipe version of 4.x-dev and with behat and npm on a CWP module
 
+Note: Omit `@` for behat suite, so use `BEHAT_SUITE="magical-content"` instead of BEHAT_SUITE="@magical-content" otherwise the yml will not be parsed correctly.
+
 ```yml
 version: ~> 1.0
 
@@ -43,7 +45,7 @@ env:
     - COMPOSER_ROOT_VERSION=2.x-dev
     - REQUIRE_EXTRA="silverstripe/fulltextsearch:^3 silverstripe/spellcheck:^2"
     - REQUIRE_RECIPE=4.x-dev
-    - BEHAT_SUITE="@magical-content"
+    - BEHAT_SUITE="magical-content"
 
 import:
   - silverstripe/silverstripe-travis-shared:config/provision/cwp-jobs-fixed-behat-npm.yml
@@ -57,7 +59,7 @@ version: ~> 1.0
 env:
   global:
     - COMPOSER_ROOT_VERSION=4.6.x-dev
-    - BEHAT_SUITE="@magical-content"
+    - BEHAT_SUITE="magical-content"
 
 import:
   - silverstripe/silverstripe-travis-shared:config/provision/core.yml
