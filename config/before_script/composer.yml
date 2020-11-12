@@ -15,5 +15,5 @@ before_script:
   - if [[ $REQUIRE_CWP_STARTER_THEME ]]; then composer require cwp/starter-theme="$REQUIRE_CWP_STARTER_THEME" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update $REQUIRE_EXTRA; fi
 
-  - composer update --prefer-source --include-dev --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
+  - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
   - composer show
