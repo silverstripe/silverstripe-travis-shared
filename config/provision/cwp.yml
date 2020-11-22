@@ -1,5 +1,5 @@
 import:
-  - config/provision/base.yml
+  - config/base.yml
 
 env:
   global:

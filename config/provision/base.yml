@@ -1,4 +1,0 @@
-import:
-  - config/env/xenial.yml
-  - config/before_script/main.yml
-  - config/script/main.yml

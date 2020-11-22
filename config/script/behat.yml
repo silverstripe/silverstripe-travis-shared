@@ -1,2 +1,0 @@
-script:
-  - if [[ $BEHAT_TEST ]]; then vendor/bin/behat $BEHAT_SUITE; fi

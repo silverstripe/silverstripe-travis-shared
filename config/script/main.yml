@@ -1,5 +1,0 @@
-import:
-  - config/script/phpunit.yml
-  - config/script/behat.yml
-  - config/script/phpcs.yml
-  - config/script/npm.yml

@@ -1,2 +1,0 @@
-script:
-  - if [[ $PHPCS_TEST ]]; then vendor/bin/phpcs; fi

@@ -1,5 +1,0 @@
-script:
-  - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
-  - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi
-  - if [[ $NPM_TEST ]]; then yarn run test; fi
-  - if [[ $NPM_TEST ]]; then yarn run lint; fi
