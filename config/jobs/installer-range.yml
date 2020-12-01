@@ -10,6 +10,7 @@ jobs:
         - DB=PGSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.6.x-dev"
         - PHPUNIT_TEST=1
+        - COW_TEST=1
     - php: 7.3
       env:
         - DB=MYSQL
