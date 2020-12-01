@@ -1,0 +1,4 @@
+import:
+  - config/provision/self-jobs-fixed.yml
+  - config/jobs/self-fixed-behat.yml
+  - config/jobs/self-fixed-npm.yml

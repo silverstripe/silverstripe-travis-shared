@@ -77,3 +77,18 @@ jobs:
         - REQUIRE_CORE=4.x-dev
         - BEHAT_TEST=1
 ```
+
+### Use a generic jobs matrix on a recipe module
+
+Use the 'self' provision for recipes modules.  The 'self' provision does not define a recipe to install, as the module itself is the recipe.
+
+```yml
+version: ~> 1.0
+
+env:
+  global:
+    - COMPOSER_ROOT_VERSION="2.6.x-dev"
+
+import:
+  - silverstripe/silverstripe-travis-shared:config/provision/self-jobs-range.yml
+```

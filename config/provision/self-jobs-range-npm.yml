@@ -1,0 +1,3 @@
+import:
+  - config/provision/self-jobs-range.yml
+  - config/jobs/self-range-npm.yml
