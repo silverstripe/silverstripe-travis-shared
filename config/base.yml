@@ -85,7 +85,7 @@ script:
   - if [[ $BEHAT_TEST ]]; then vendor/bin/behat $BEHAT_SUITE; fi
 
   # PHPCS
-  - if [[ $PHPCS_TEST ]]; then vendor/bin/phpcs; fi
+  - if [[ $PHPCS_TEST && -f phpcs.xml.dist ]]; then vendor/bin/phpcs; fi
 
   # NPM
   - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
