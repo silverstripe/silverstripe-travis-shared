@@ -34,19 +34,13 @@ before_script:
   # and its version is incompatible with chromium-chromedriver
   - if [[ $BEHAT_TEST ]]; then sudo apt-get remove -y --purge google-chrome-stable || true; fi
 
-  # Start behat services
-  - if [[ $BEHAT_TEST ]]; then mkdir artifacts; fi
-  # - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; fi
-  # - if [[ $BEHAT_TEST ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi
-  - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi
-  - if [[ $BEHAT_TEST ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
-
   # COMPOSER
   # install $COMPOSER_VERSION if defined, otherwise use Composer v1 with PHP <= 7.3, Composer v2 for >= 7.3
   - if [ $COMPOSER_VERSION ] ; then composer self-update --$COMPOSER_VERSION ; elif [ $(php -r 'echo (int) version_compare(phpversion(), "7.3.0", "<=");') = "1" ] ; then composer self-update --1; else composer self-update --2; fi
   - composer --version
   - composer validate
   - if [[ $DB == PGSQL ]]; then composer require --no-update silverstripe/postgresql:^2 --no-update --prefer-dist; fi
+  - if [[ $BEHAT_TEST ]]; then composer require --no-update silverstripe/behat-extension:^4 silverstripe/serve:^2 ; fi;
   - if [[ $REQUIRE_RECIPE_CORE ]]; then composer require silverstripe/recipe-core="$REQUIRE_RECIPE_CORE" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_CWP_CWP_RECIPE_CMS ]]; then composer require cwp/cwp-recipe-cms="$REQUIRE_CWP_CWP_RECIPE_CMS" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_INSTALLER ]]; then composer require silverstripe/installer="$REQUIRE_INSTALLER" --no-update --prefer-dist; fi
@@ -68,6 +62,15 @@ before_script:
   # NPM
   # This needs to happen after composer update
   - if [[ $NPM_TEST ]]; then rm -rf client/dist && nvm install && nvm use && npm install -g yarn && yarn install --network-concurrency 1 && (cd vendor/silverstripe/admin && yarn install --network-concurrency 1) && yarn run build; fi
+
+  # Start behat services
+  # This needs to happen after composer update
+  - if [[ $BEHAT_TEST ]]; then mkdir artifacts; fi
+  # - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; fi
+  # - if [[ $BEHAT_TEST ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi
+  - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi  
+  - if [[ $BEHAT_TEST ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
+
 
 script:
   # PHPUNIT
