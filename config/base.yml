@@ -71,10 +71,14 @@ before_script:
   - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi  
   - if [[ $BEHAT_TEST ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
 
+  # Validate cow schema
+  - if [[ -f .cow.json ]]; then composer global require silverstripe/cow dev-master $COMPOSER_INSTALL_ARG; fi
+  - if [[ -f .cow.json ]]; then ~/.config/composer/vendor/bin/cow schema:validate; fi
 
 script:
   # PHPUNIT
-  - if [[ $PHPUNIT_TEST ]]; then vendor/bin/phpunit; fi
+  - if [[ "$PHPUNIT_TEST" != "" && "$PHPUNIT_SUITE" == "" ]]; then vendor/bin/phpunit; fi
+  - if [[ "$PHPUNIT_TEST" != "" && "$PHPUNIT_SUITE" != "" ]]; then vendor/bin/phpunit --testsuite $PHPUNIT_SUITE; fi
   - if [[ $PHPUNIT_COVERAGE_TEST ]]; then phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml; fi
 
   # BEHAT
