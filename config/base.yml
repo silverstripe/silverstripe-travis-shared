@@ -28,9 +28,6 @@ addons:
       - chromium-browser
 
 before_script:
-  # NPM
-  - if [[ $NPM_TEST ]]; then rm -rf client/dist && nvm install && nvm use && npm install -g yarn && yarn install --network-concurrency 1 && (cd vendor/silverstripe/admin && yarn install --network-concurrency 1) && yarn run build; fi
-
   # BEHAT
   # Remove preinstalled Chrome (google-chrome)
   # this would conflict with our chromium-browser installation
@@ -67,6 +64,10 @@ before_script:
   - phpenv config-rm xdebug.ini || true
   - echo 'memory_limit = 4048M' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - echo 'always_populate_raw_post_data = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
+  # NPM
+  # This needs to happen after composer update
+  - if [[ $NPM_TEST ]]; then rm -rf client/dist && nvm install && nvm use && npm install -g yarn && yarn install --network-concurrency 1 && (cd vendor/silverstripe/admin && yarn install --network-concurrency 1) && yarn run build; fi
 
 script:
   # PHPUNIT
