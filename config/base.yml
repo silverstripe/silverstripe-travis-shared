@@ -42,7 +42,7 @@ before_script:
   - if [ $COMPOSER_VERSION ] ; then composer self-update --$COMPOSER_VERSION ; elif [ $(php -r 'echo (int) version_compare(phpversion(), "7.3.0", "<=");') = "1" ] ; then composer self-update --1; else composer self-update --2; fi
   - composer --version
   - composer validate
-  - if [[ $DB == PGSQL ]]; then composer require --no-update silverstripe/postgresql:^2 --no-update --prefer-dist; fi
+  - if [[ $DB == PGSQL && $(php -r 'echo json_decode(file_get_contents("composer.json"))->name;') != "silverstripe/postgresql" ]]; then composer require --no-update silverstripe/postgresql:^2 --no-update --prefer-dist; fi
   - if [[ $BEHAT_TEST ]]; then composer require --no-update silverstripe/behat-extension:^4 silverstripe/serve:^2 ; fi;
   - if [[ $REQUIRE_RECIPE_CORE ]]; then composer require silverstripe/recipe-core="$REQUIRE_RECIPE_CORE" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_CWP_CWP_RECIPE_CMS ]]; then composer require cwp/cwp-recipe-cms="$REQUIRE_CWP_CWP_RECIPE_CMS" --no-update --prefer-dist; fi
