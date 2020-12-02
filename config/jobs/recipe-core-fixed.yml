@@ -15,6 +15,7 @@ jobs:
     - php: 7.3
       env:
         - DB=MYSQL
+        - PDO=1
         - REQUIRE_RECIPE_CORE="$REQUIRE_RECIPE"
         - PHPUNIT_TEST=1
         - PHPCS_TEST=1
