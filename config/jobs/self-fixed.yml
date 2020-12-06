@@ -25,3 +25,5 @@ jobs:
         - DB=MYSQL
         - PHPUNIT_TEST=1
         - COMPOSER_INSTALL_ARG=--ignore-platform-reqs
+  allow_failures:
+    - php: nightly
