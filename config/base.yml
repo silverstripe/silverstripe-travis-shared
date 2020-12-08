@@ -38,12 +38,14 @@ before_script:
   - if [[ $BEHAT_TEST ]]; then sudo apt-get remove -y --purge google-chrome-stable || true; fi
 
   # COMPOSER
+  # install $COMPOSER_VERSION if defined, otherwise use Composer v1 with PHP <= 7.3, Composer v2 for >= 7.3
+  - if [ $COMPOSER_VERSION ] ; then composer self-update --$COMPOSER_VERSION ; elif [ $(php -r 'echo (int) version_compare(phpversion(), "7.3.0", "<=");') = "1" ] ; then composer self-update --1; else composer self-update --2; fi
+
   # clear-cache because composer may still think it has default ubuntu php version (7.4) instead of
   # the php-cli version that travis switched to (e.g. 7.1).  This is important for composer requirements
   # that have minor php contracts e.g. symfony/translation-contracts v1.1.10 (php 7.1) vs v2.3.0 (php 7.2)
   - composer clear-cache
-  # install $COMPOSER_VERSION if defined, otherwise use Composer v1 with PHP <= 7.3, Composer v2 for >= 7.3
-  - if [ $COMPOSER_VERSION ] ; then composer self-update --$COMPOSER_VERSION ; elif [ $(php -r 'echo (int) version_compare(phpversion(), "7.3.0", "<=");') = "1" ] ; then composer self-update --1; else composer self-update --2; fi
+  
   - composer --version
   - composer validate
   - if [[ $DB == PGSQL && $(php -r 'echo json_decode(file_get_contents("composer.json"))->name;') != "silverstripe/postgresql" ]]; then composer require --no-update silverstripe/postgresql:^2 --no-update --prefer-dist; fi
