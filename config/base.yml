@@ -66,15 +66,15 @@ before_script:
 
   # NPM
   # This needs to happen after composer update
-  - if [[ -d vendor/silverstripe/admin ]]; then admin_installed=true; else admin_installed=false; fi
+  - if [[ -d vendor/silverstripe/admin ]]; then admin_installed=1; else admin_installed=0; fi
   - if [[ $NPM_TEST ]]; then rm -rf client/dist; fi
   - if [[ $NPM_TEST ]]; then nvm install; fi
   - if [[ $NPM_TEST ]]; then nvm use; fi
   - if [[ $NPM_TEST ]]; then npm install -g yarn; fi
   - if [[ $NPM_TEST ]]; then yarn install --network-concurrency 1; fi
-  - if [[ $NPM_TEST && $admin_installed ]]; then cd vendor/silverstripe/admin; fi
-  - if [[ $NPM_TEST && $admin_installed ]]; then yarn install --network-concurrency 1; fi
-  - if [[ $NPM_TEST && $admin_installed ]]; then cd ../../..; fi
+  - if [[ $NPM_TEST && $admin_installed == 1 ]]; then cd vendor/silverstripe/admin; fi
+  - if [[ $NPM_TEST && $admin_installed == 1 ]]; then yarn install --network-concurrency 1; fi
+  - if [[ $NPM_TEST && $admin_installed == 1 ]]; then cd ../../..; fi
   - if [[ $NPM_TEST ]]; then yarn run build; fi
 
   # Start behat services
