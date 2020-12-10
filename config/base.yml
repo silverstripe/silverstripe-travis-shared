@@ -79,11 +79,14 @@ before_script:
 
   # Start behat services
   # This needs to happen after composer update
+  - if [[ -d vendor/silverstripe/cms ]]; then cms_installed=1; else cms_installed=0; fi
   - if [[ $BEHAT_TEST ]]; then mkdir artifacts; fi
   - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; fi
   - if [[ $BEHAT_TEST ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi
-  - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi  
-  - if [[ $BEHAT_TEST ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
+  - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi
+  - if [[ $BEHAT_TEST && $cms_installed == 1 ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
+  # The following line is used for testing the cms module itself
+  - if [[ $BEHAT_TEST && $cms_installed == 0 ]]; then (vendor/bin/serve --bootstrap-file tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
 
   # Validate cow schema
   - if [[ $COW_TEST && -f .cow.json ]]; then vendor/bin/cow schema:validate; fi
