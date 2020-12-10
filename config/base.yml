@@ -81,6 +81,7 @@ before_script:
   # This needs to happen after composer update
   - if [[ -d vendor/silverstripe/cms ]]; then cms_installed=1; else cms_installed=0; fi
   - if [[ $BEHAT_TEST ]]; then mkdir artifacts; fi
+  - if [[ $BEHAT_TEST ]]; then cp composer.json artifacts/; fi
   - if [[ $BEHAT_TEST ]]; then cp composer.lock artifacts/; fi
   - if [[ $BEHAT_TEST ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi
   - if [[ $BEHAT_TEST ]]; then (chromedriver > artifacts/chromedriver.log 2>&1 &); fi
