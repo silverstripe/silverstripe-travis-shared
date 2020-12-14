@@ -21,13 +21,15 @@ import:
 
 This includes a minimum recipe version of 4.6.x-dev to match a composer requirement of a required core module of ^4.6
 
+NOTE: Appending ` || ` to `REQUIRE_RECIPE` on a range matrix is necessary to produce a valid Composer version requirement.
+
 ```yml
 version: ~> 1.0
 
 env:
   global:
     - COMPOSER_ROOT_VERSION="1.6.x-dev"
-    - REQUIRE_RECIPE="4.6.x-dev"
+    - REQUIRE_RECIPE="4.6.x-dev || "
 
 import:
   - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range.yml
