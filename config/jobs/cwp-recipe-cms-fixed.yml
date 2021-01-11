@@ -6,6 +6,7 @@ jobs:
         - DB=MYSQL
         - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE"
         - PHPUNIT_TEST=1
+        - PHPCS_TEST=1
     - php: 7.2
       env:
         - DB=MYSQL
@@ -17,10 +18,9 @@ jobs:
         - DB=MYSQL
         - PDO=1
         - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE"
-        - PHPUNIT_TEST=1
-        - PHPCS_TEST=1
+        - PHPUNIT_COVERAGE_TEST=1
     - php: 7.4
       env:
         - DB=MYSQL
         - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE"
-        - PHPUNIT_COVERAGE_TEST=1
+        - PHPUNIT_TEST=1
