@@ -1,0 +1,6 @@
+jobs:
+  include:
+    - php: 7.4
+      env:
+        - DB=MYSQL
+        - NPM_TEST=1

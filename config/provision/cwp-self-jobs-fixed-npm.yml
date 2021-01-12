@@ -1,0 +1,3 @@
+import:
+  - config/provision/cwp-self-jobs-fixed.yml
+  - config/jobs/cwp-self-fixed-npm.yml

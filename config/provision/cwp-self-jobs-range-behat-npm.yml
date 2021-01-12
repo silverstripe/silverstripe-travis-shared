@@ -1,0 +1,4 @@
+import:
+  - config/provision/cwp-self-jobs-range.yml
+  - config/jobs/cwp-self-range-behat.yml
+  - config/jobs/cwp-self-range-npm.yml

@@ -1,0 +1,3 @@
+import:
+  - config/provision/cwp-self.yml
+  - config/jobs/cwp-self-range.yml
