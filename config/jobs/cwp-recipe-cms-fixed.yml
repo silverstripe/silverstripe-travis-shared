@@ -24,3 +24,11 @@ jobs:
         - DB=MYSQL
         - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE"
         - PHPUNIT_TEST=1
+    - php: nightly
+      env:
+        - DB=MYSQL
+        - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE"
+        - PHPUNIT_TEST=1
+        - COMPOSER_INSTALL_ARG=--ignore-platform-reqs
+  allow_failures:
+    - php: nightly
