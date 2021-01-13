@@ -8,7 +8,7 @@ jobs:
         - PHPCS_TEST=1
     - php: 7.2
       env:
-        - DB=PGSQL
+        - DB=MYSQL
         - PHPUNIT_TEST=1
         - COW_TEST=1
     - php: 7.3
