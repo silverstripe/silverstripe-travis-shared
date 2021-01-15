@@ -24,7 +24,7 @@ jobs:
         - DB=MYSQL
         - REQUIRE_RECIPE_CORE="$REQUIRE_RECIPE 4.x-dev"
         - PHPUNIT_TEST=1
-    - php: nightly
+    - php: 8.0
       env:
         - DB=MYSQL
         - REQUIRE_RECIPE_CORE="$REQUIRE_RECIPE 4.x-dev"

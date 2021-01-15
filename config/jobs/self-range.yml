@@ -20,7 +20,7 @@ jobs:
       env:
         - DB=MYSQL
         - PHPUNIT_TEST=1
-    - php: nightly
+    - php: 8.0
       env:
         - DB=MYSQL
         - PHPUNIT_TEST=1

@@ -20,10 +20,10 @@ jobs:
       env:
         - DB=MYSQL
         - PHPUNIT_TEST=1
-    - php: nightly
+    - php: 8.0
       env:
         - DB=MYSQL
         - PHPUNIT_TEST=1
         - COMPOSER_INSTALL_ARG=--ignore-platform-reqs
   allow_failures:
-    - php: nightly
+    - php: 8.0
