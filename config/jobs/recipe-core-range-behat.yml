@@ -6,3 +6,10 @@ jobs:
         - REQUIRE_RECIPE_CORE="$REQUIRE_RECIPE 4.6.x-dev"
         - REQUIRE_RECIPE_TESTING=^1
         - BEHAT_TEST=1
+    - php: 7.4
+      env:
+        - DB=MYSQL
+        - REQUIRE_RECIPE_CORE="$REQUIRE_RECIPE 4.6.x-dev"
+        - REQUIRE_RECIPE_TESTING=^1
+        - BEHAT_TEST=1
+        - REQUIRE_GRAPHQL="^3@dev || 4.x-dev"
