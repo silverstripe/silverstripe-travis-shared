@@ -57,7 +57,7 @@ before_script:
   - if [[ $REQUIRE_GRAPHQL ]]; then composer require silverstripe/graphql="$REQUIRE_GRAPHQL" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update "$REQUIRE_EXTRA"; fi
   - if [[ $COW_TEST && -f .cow.json ]]; then composer require --no-update silverstripe/cow dev-master "$COMPOSER_INSTALL_ARG"; fi
-
+  - if [[ $(composer validate) =~ 'is valid' ]]; then cat composer.json; fi
   - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile "$COMPOSER_INSTALL_ARG"
   - composer show
 
