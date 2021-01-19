@@ -1,3 +1,4 @@
+# Maximum version of php for silverstripe behat is currently 7.3
 jobs:
   include:
     - php: 7.3
@@ -6,7 +7,7 @@ jobs:
         - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE 2.6.x-dev"
         - REQUIRE_RECIPE_TESTING=^1
         - BEHAT_TEST=1
-    - php: 7.4
+    - php: 7.3
       env:
         - DB=MYSQL
         - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE 2.7.x-dev"
