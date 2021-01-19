@@ -50,14 +50,15 @@ before_script:
   - if [[ $REQUIRE_RECIPE_TESTING ]]; then composer require silverstripe/recipe-testing="$REQUIRE_RECIPE_TESTING" --dev --no-update --prefer-dist; fi
   - if [[ $REQUIRE_FRAMEWORKTEST ]]; then composer require silverstripe/frameworktest="$REQUIRE_FRAMEWORKTEST" --dev --no-update --prefer-dist; fi
   - if [[ $REQUIRE_CWP_STARTER_THEME ]]; then composer require cwp/starter-theme="$REQUIRE_CWP_STARTER_THEME" --no-update --prefer-dist; fi
-  - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update $REQUIRE_EXTRA; fi
-  # $REQUIRE_GRAPHQL needs to happen AFTER $REQUIRE_EXTRA in case we specificy a version of a module that has
-  # a graphql:^3 constraint e.g. elemental 4.5.0.  Otherwise what happens is that graphql 4 will be installed and 
-  # then a previous version of elemental 4.4.1 which has no graphql contraint and isn't graphql 4 compatible will be installed
+  # $REQUIRE_GRAPHQL needs to happen BEFORE $REQUIRE_EXTRA so that graphql 4 is more likely to install to increase
+  # our level of test coverage.  This may lead to the installation of previous requirements that use graphql that did
+  # not set a graphql contraint and were not graphql 4 compatible such as elemental 4.4.1 - in this scenario set
+  # REQUIRE_EXTRA elemental to 4.x-dev or a stable version of elemental ^4.6 once that has been released
   - if [[ $REQUIRE_GRAPHQL ]]; then composer require silverstripe/graphql="$REQUIRE_GRAPHQL" --no-update --prefer-dist; fi
-  - if [[ $COW_TEST && -f .cow.json ]]; then composer require --no-update silverstripe/cow dev-master $COMPOSER_INSTALL_ARG; fi
+  - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update "$REQUIRE_EXTRA"; fi
+  - if [[ $COW_TEST && -f .cow.json ]]; then composer require --no-update silverstripe/cow dev-master "$COMPOSER_INSTALL_ARG"; fi
 
-  - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
+  - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile "$COMPOSER_INSTALL_ARG"
   - composer show
 
   # PHPENV
