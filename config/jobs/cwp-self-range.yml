@@ -27,5 +27,3 @@ jobs:
         - PHPUNIT_TEST=1
         - REQUIRE_GRAPHQL="^3@dev || 4.x-dev"
         - COMPOSER_INSTALL_ARG=--ignore-platform-reqs
-  allow_failures:
-    - php: 8.0
