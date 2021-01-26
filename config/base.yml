@@ -54,7 +54,7 @@ before_script:
   # our level of test coverage.  This may lead to the installation of previous requirements that use graphql that did
   # not set a graphql contraint and were not graphql 4 compatible such as elemental 4.4.1 - in this scenario set
   # REQUIRE_EXTRA elemental to 4.x-dev or a stable version of elemental ^4.6 once that has been released
-  - if [[ $REQUIRE_GRAPHQL ]]; then composer require silverstripe/graphql="$REQUIRE_GRAPHQL" --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_GRAPHQL && $(php -r 'echo json_decode(file_get_contents("composer.json"))->name;') != "silverstripe/graphql" ]]; then composer require silverstripe/graphql="$REQUIRE_GRAPHQL" --no-update --prefer-dist; fi
   # $REQUIRE_EXTRA needs to NOT be surronded by double quotes, otherwise requiring multiple modules will not work
   # if they have carets in their version contraint
   - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update $REQUIRE_EXTRA; fi
