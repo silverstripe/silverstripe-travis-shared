@@ -2,7 +2,7 @@ language: php
 
 os: linux
 
-dist: xenial
+dist: bionic
 
 # Always install services for postgres + behat because "services"
 # does not "merge" correctly so this cannot be dynamic
@@ -10,6 +10,11 @@ services:
   - mysql
   - postgresql
   - xvfb
+
+addons:
+  apt:
+    packages:
+      - tidy
 
 # TODO: try removing DISPLAY + XVFBARGS and see if behat still functions
 env:
@@ -23,19 +28,24 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
-addons:
-  apt:
-    packages:
-      - tidy
-      - chromium-chromedriver
-      - chromium-browser
-
 before_script:
   # BEHAT
   # Remove preinstalled Chrome (google-chrome)
   # this would conflict with our chromium-browser installation
   # and its version is incompatible with chromium-chromedriver
   - if [[ $BEHAT_TEST ]]; then sudo apt-get remove -y --purge google-chrome-stable || true; fi
+
+  # Decide which version of chromium you want
+  # A) Comment these two lines to get the stable version of chromium from
+  #    https://packages.ubuntu.com/bionic/chromium-browser
+  # B) Uncomment these two lines to get the beta version of chromium from
+  #    https://launchpad.net/~chromium-team/+archive/ubuntu/beta
+  #    This can be helpful to resolve any chromium specific bugs
+  - if [[ $BEHAT_TEST ]]; then sudo add-apt-repository -y ppa:chromium-team/beta; fi
+  - if [[ $BEHAT_TEST ]]; then sudo apt-get -q update; fi
+
+  # Install chromium and chromedriver
+  - if [[ $BEHAT_TEST ]]; then sudo apt-get install -y chromium-browser chromium-chromedriver; fi
 
   # COMPOSER
   # install $COMPOSER_VERSION if defined, otherwise use Composer v1 with PHP <= 7.3, Composer v2 for >= 7.3
