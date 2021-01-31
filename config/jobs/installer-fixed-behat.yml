@@ -7,6 +7,7 @@ jobs:
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
         - REQUIRE_RECIPE_TESTING=^1
         - BEHAT_TEST=1
+        - REQUIRE_GRAPHQL="^3@dev"
     - php: 7.3
       env:
         - DB=MYSQL
