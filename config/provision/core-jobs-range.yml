@@ -1,3 +1,0 @@
-import:
-  - config/provision/core.yml
-  - config/jobs/recipe-core-range.yml
