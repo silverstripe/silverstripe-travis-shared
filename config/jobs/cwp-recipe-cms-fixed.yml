@@ -7,6 +7,7 @@ jobs:
         - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE"
         - PHPUNIT_TEST=1
         - PHPCS_TEST=1
+        - PHPSTAN_TEST=1
     - php: 7.2
       env:
         - DB=MYSQL

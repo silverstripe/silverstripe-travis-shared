@@ -123,6 +123,9 @@ script:
   # PHPCS
   - if [[ $PHPCS_TEST && -f phpcs.xml.dist ]]; then vendor/bin/phpcs; fi
 
+  # PHPSTAN
+  - if [[ $PHPSTAN_TEST && -f phpstan.neon.dist ]]; then vendor/bin/phpstan analyse; fi
+
   # NPM
   - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
   - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi

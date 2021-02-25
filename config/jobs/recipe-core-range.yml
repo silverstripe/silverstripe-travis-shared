@@ -7,6 +7,7 @@ jobs:
         - REQUIRE_RECIPE_CORE="$REQUIRE_RECIPE 4.5.x-dev"
         - PHPUNIT_TEST=1
         - PHPCS_TEST=1
+        - PHPSTAN_TEST=1
     - php: 7.2
       env:
         - DB=PGSQL
