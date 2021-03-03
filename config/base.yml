@@ -91,7 +91,6 @@ before_script:
   - if [[ $NPM_TEST && $admin_installed == 1 ]]; then cd vendor/silverstripe/admin; fi
   - if [[ $NPM_TEST && $admin_installed == 1 ]]; then yarn install --network-concurrency 1; fi
   - if [[ $NPM_TEST && $admin_installed == 1 ]]; then cd ../../..; fi
-  - if [[ $NPM_TEST ]]; then yarn run build; fi
 
   # Start behat services
   # This needs to happen after composer update
@@ -104,9 +103,6 @@ before_script:
   - if [[ $BEHAT_TEST && $cms_installed == 1 ]]; then (vendor/bin/serve --bootstrap-file vendor/silverstripe/cms/tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
   # The following line is used for testing the cms module itself
   - if [[ $BEHAT_TEST && $cms_installed == 0 ]]; then (vendor/bin/serve --bootstrap-file tests/behat/serve-bootstrap.php &> artifacts/serve.log &); fi
-
-  # Validate cow schema
-  - if [[ $COW_TEST && -f .cow.json ]]; then vendor/bin/cow schema:validate; fi
 
 script:
   # PHPUNIT
@@ -127,10 +123,14 @@ script:
   - if [[ $PHPSTAN_TEST && -f phpstan.neon.dist ]]; then vendor/bin/phpstan analyse; fi
 
   # NPM
+  - if [[ $NPM_TEST ]]; then yarn run build; fi
   - if [[ $NPM_TEST ]]; then git diff-files --quiet -w --relative=client; fi
   - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi
   - if [[ $NPM_TEST ]]; then yarn run test; fi
   - if [[ $NPM_TEST ]]; then yarn run lint; fi
+  
+  # Validate cow schema
+  - if [[ $COW_TEST && -f .cow.json ]]; then vendor/bin/cow schema:validate; fi
 
 after_success:
   # PHPUNIT
