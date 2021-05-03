@@ -119,3 +119,12 @@ env:
 import:
   - silverstripe/silverstripe-travis-shared:config/provision/standard-jobs-range.yml
 ```
+
+## Travis Configuration
+
+Depending on the build functionality, you'll need to set up env vars.
+Use [Travis secrets](https://docs.travis-ci.com/user/encryption-keys/) for anything sensitive
+
+ * `ARTIFACTS_BUCKET`: A writeable bucket for screenshots and other artifacts (usually only required for Behat-based builds)
+ * `ARTIFACTS_KEY`: S3 access key, with write permissions on `ARTIFACTS_BUCKET`
+ * `ARTIFACTS_SECRET`: S3 secret for the provided `ARTIFACTS_KEY`
