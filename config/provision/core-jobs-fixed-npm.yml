@@ -1,3 +1,0 @@
-import:
-  - config/provision/core-jobs-fixed.yml
-  - config/jobs/recipe-core-fixed-npm.yml

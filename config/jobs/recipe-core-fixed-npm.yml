@@ -1,7 +1,0 @@
-jobs:
-  include:
-    - php: 7.4
-      env:
-        - DB=MYSQL
-        - REQUIRE_RECIPE_CORE="$REQUIRE_RECIPE"
-        - NPM_TEST=1
