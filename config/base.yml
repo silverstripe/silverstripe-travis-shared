@@ -54,6 +54,13 @@ before_script:
   # Install chromium and chromedriver
   - if [[ $BEHAT_TEST ]]; then sudo apt-get install -y chromium-browser chromium-chromedriver; fi
 
+  # PHPENV
+  - phpenv rehash
+  - phpenv config-rm xdebug.ini || true
+  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then memlimit='8192M'; else memlimit='4096M'; fi
+  - echo "memory_limit = ${memlimit}" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - echo 'always_populate_raw_post_data = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
   # COMPOSER
   # install $COMPOSER_VERSION if defined, otherwise use Composer v1 with PHP <= 7.3, Composer v2 for >= 7.3
   - if [ $COMPOSER_VERSION ]; then composer self-update "$COMPOSER_VERSION"; elif [ $(php -r 'echo (int) version_compare(phpversion(), "7.3.0", "<=");') = "1" ]; then composer self-update 1.9.3; else composer self-update; fi
@@ -79,13 +86,6 @@ before_script:
   - if [[ $(composer validate 2>&1 | tr '\n' ' ') =~ ' is valid' ]]; then cat composer.json; fi
   - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
   - composer show
-
-  # PHPENV
-  - phpenv rehash
-  - phpenv config-rm xdebug.ini || true
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then memlimit='8192M'; else memlimit='4096M'; fi
-  - echo "memory_limit = ${memlimit}" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-  - echo 'always_populate_raw_post_data = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
   # NPM
   # This needs to happen after composer update
