@@ -23,6 +23,12 @@ env:
     - SS_BASE_URL="http://localhost:8080/"
     - DISPLAY=":99"
     - XVFBARGS=":99 -ac -screen 0 1024x768x16"
+    # SHIPPABLE is used get codecov to detect that the CI environment is travis, which expects the following
+    # env variables to be present: CI, TRAVIS, SHIPPABLE
+    # https://github.com/codecov/uploader/blob/master/src/ci_providers/provider_travisci.js#L2
+    # SHIPPABLE is not in the travis list of envs variables https://docs.travis-ci.com/user/environment-variables/
+    # It's expected that the codecov team will eventually remove SHIPPABLE as a conditional at some point
+    - SHIPPABLE=1
 
 cache:
   directories:
