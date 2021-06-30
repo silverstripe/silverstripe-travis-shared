@@ -63,7 +63,7 @@ before_script:
   # PHPENV
   - phpenv rehash
   - phpenv config-rm xdebug.ini || true
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then memlimit='8192M'; else memlimit='4096M'; fi
+  # - if [[ $PHPUNIT_COVERAGE_TEST ]]; then memlimit='8192M'; else memlimit='4096M'; fi
   - echo "memory_limit = ${memlimit}" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - echo 'always_populate_raw_post_data = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
@@ -119,13 +119,13 @@ before_script:
 
   # codecov
   # https://about.codecov.io/blog/introducing-codecovs-new-uploader/
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --import; fi
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then curl -Os https://uploader.codecov.io/latest/codecov-linux; fi
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then curl -Os https://uploader.codecov.io/latest/codecov-linux.SHA256SUM; fi
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then curl -Os https://uploader.codecov.io/latest/codecov-linux.SHA256SUM.sig; fi
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then gpg --verify codecov-linux.SHA256SUM.sig codecov-linux.SHA256SUM; fi
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then shasum -a 256 -c codecov-linux.SHA256SUM; fi
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then chmod +x codecov-linux; fi
+  # - if [[ $PHPUNIT_COVERAGE_TEST ]]; then curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --import; fi
+  # - if [[ $PHPUNIT_COVERAGE_TEST ]]; then curl -Os https://uploader.codecov.io/latest/codecov-linux; fi
+  # - if [[ $PHPUNIT_COVERAGE_TEST ]]; then curl -Os https://uploader.codecov.io/latest/codecov-linux.SHA256SUM; fi
+  # - if [[ $PHPUNIT_COVERAGE_TEST ]]; then curl -Os https://uploader.codecov.io/latest/codecov-linux.SHA256SUM.sig; fi
+  # - if [[ $PHPUNIT_COVERAGE_TEST ]]; then gpg --verify codecov-linux.SHA256SUM.sig codecov-linux.SHA256SUM; fi
+  # - if [[ $PHPUNIT_COVERAGE_TEST ]]; then shasum -a 256 -c codecov-linux.SHA256SUM; fi
+  # - if [[ $PHPUNIT_COVERAGE_TEST ]]; then chmod +x codecov-linux; fi
 
 script:
   # PHPUNIT
@@ -133,8 +133,8 @@ script:
   - if [[ "$PHPUNIT_TEST" != "" && "$PHPUNIT_SUITE" != "" ]]; then vendor/bin/phpunit --testsuite $PHPUNIT_SUITE; fi
 
   # PHPUNIT_COVERAGE
-  - if [[ "$PHPUNIT_COVERAGE_TEST" != "" && "$PHPUNIT_COVERAGE_SUITE" == "" ]]; then phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml; fi
-  - if [[ "$PHPUNIT_COVERAGE_TEST" != "" && "$PHPUNIT_COVERAGE_SUITE" != "" ]]; then phpdbg -qrr vendor/bin/phpunit --testsuite $PHPUNIT_COVERAGE_SUITE --coverage-clover=coverage.xml; fi
+  # - if [[ "$PHPUNIT_COVERAGE_TEST" != "" && "$PHPUNIT_COVERAGE_SUITE" == "" ]]; then phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml; fi
+  # - if [[ "$PHPUNIT_COVERAGE_TEST" != "" && "$PHPUNIT_COVERAGE_SUITE" != "" ]]; then phpdbg -qrr vendor/bin/phpunit --testsuite $PHPUNIT_COVERAGE_SUITE --coverage-clover=coverage.xml; fi
 
   # BEHAT
   - if [[ $BEHAT_TEST ]]; then vendor/bin/behat $BEHAT_SUITE; fi
@@ -155,9 +155,9 @@ script:
   # Validate cow schema
   - if [[ $COW_TEST && -f .cow.json ]]; then vendor/bin/cow schema:validate; fi
 
-after_success:
+# after_success:
   # codecov
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then ./codecov-linux -f coverage.xml; fi
+  # - if [[ $PHPUNIT_COVERAGE_TEST ]]; then ./codecov-linux -f coverage.xml; fi
   
 
 after_failure:
