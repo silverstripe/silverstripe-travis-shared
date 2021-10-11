@@ -93,6 +93,21 @@ before_script:
   - if [[ $(composer validate 2>&1 | tr '\n' ' ') =~ ' is valid' ]]; then cat composer.json; fi
   - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
   - composer show
+    
+  # TMP - phpunit9 upgrade, remove once framework PR is merged https://github.com/silverstripe/silverstripe-framework/pull/10028
+  #
+  - echo "TRAVIS_PULL_REQUEST_BRANCH: $TRAVIS_PULL_REQUEST_BRANCH"
+  - echo "TRAVIS_REPO_SLUG: $TRAVIS_REPO_SLUG"
+  - FORK=false
+  - if [[ $TRAVIS_PULL_REQUEST_BRANCH =~ sapphire-test-nine ]] && ! [[ $TRAVIS_REPO_SLUG =~ silverstripe-framework ]]; then FORK=true; fi
+  - echo "FORK: $FORK"
+  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/SapphireTest.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/SapphireTest.php; fi
+  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/FunctionalTest.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/FunctionalTest.php; fi
+  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/SSListContains.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/SSListContains.php; fi
+  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/SSListContainsOnly.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/SSListContainsOnly.php; fi
+  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/SSListContainsOnlyMatchingItems.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/SSListContainsOnlyMatchingItems.php; fi
+  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/ViewableDataContains.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/ViewableDataContains.php; fi
+  #
 
   # NPM
   # This needs to happen after composer update
