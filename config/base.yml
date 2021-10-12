@@ -103,7 +103,10 @@ before_script:
   #
   
   - if [[ $(composer validate 2>&1 | tr '\n' ' ') =~ ' is valid' ]]; then cat composer.json; fi
-  - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
+  # Note: have changed --prefer-source to --prefer-dist in order otherwise older silverstripe vendor modules that still have the phpunit5 setUp() signature
+  # without :void will get loaded and fatal PHP errors will be thrown.  There will still be some uses cases such as recipes that run phpunit on modules
+  # in the vendor folder that will need to be treated seperately
+  - composer update --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
   - composer show
 
   # TMP - phpunit9 upgrade, remove once framework PR is merged https://github.com/silverstripe/silverstripe-framework/pull/10028
