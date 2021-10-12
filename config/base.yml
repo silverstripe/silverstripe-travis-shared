@@ -98,7 +98,7 @@ before_script:
   - FORK=false
   - if [[ $TRAVIS_PULL_REQUEST_BRANCH =~ sapphire-test-nine ]] && ! [[ $TRAVIS_REPO_SLUG =~ silverstripe-framework ]]; then FORK=true; fi
   - echo "FORK - $FORK"
-  - 'if [ $FORK ]; then php -r "\$j=json_decode(file_get_contents(\'composer.json\'));\$j->replace=json_decode(\'{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\": \"*\"}\');file_put_contents(\'composer.json\', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi'
+  - if [ $FORK ]; then php -r "\$j=json_decode(file_get_contents('composer.json'));\$j->replace=json_decode('{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\":\"*\"}');file_put_contents('composer.json', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi
   #
   #
   
