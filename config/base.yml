@@ -95,10 +95,10 @@ before_script:
   # TMP - phpunit9 upgrade, remove once framework PR is merged https://github.com/silverstripe/silverstripe-framework/pull/10028
   - echo "TRAVIS_PULL_REQUEST_BRANCH - $TRAVIS_PULL_REQUEST_BRANCH"
   - echo "TRAVIS_REPO_SLUG - $TRAVIS_REPO_SLUG"
-  - FORK=false
-  - if [[ $TRAVIS_PULL_REQUEST_BRANCH =~ sapphire-test-nine ]] && ! [[ $TRAVIS_REPO_SLUG =~ silverstripe-framework ]]; then FORK=true; fi
+  - FORK=0
+  - if [[ $TRAVIS_PULL_REQUEST_BRANCH =~ sapphire-test-nine ]] && ! [[ $TRAVIS_REPO_SLUG =~ silverstripe-framework ]]; then FORK=1; fi
   - echo "FORK - $FORK"
-  - if [ $FORK ]; then php -r "\$j=json_decode(file_get_contents('composer.json'));\$j->replace=json_decode('{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\":\"*\"}');file_put_contents('composer.json', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi
+  - if [ $FORK == 1 ]; then php -r "\$j=json_decode(file_get_contents('composer.json'));\$j->replace=json_decode('{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\":\"*\"}');file_put_contents('composer.json', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi
   #
   #
   
@@ -111,12 +111,12 @@ before_script:
 
   # TMP - phpunit9 upgrade, remove once framework PR is merged https://github.com/silverstripe/silverstripe-framework/pull/10028
   #
-  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/SapphireTest.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/SapphireTest.php; fi
-  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/FunctionalTest.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/FunctionalTest.php; fi
-  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/SSListContains.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/SSListContains.php; fi
-  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/SSListContainsOnly.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/SSListContainsOnly.php; fi
-  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/SSListContainsOnlyMatchingItems.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/SSListContainsOnlyMatchingItems.php; fi
-  - if [ $FORK ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/ViewableDataContains.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/ViewableDataContains.php; fi
+  - if [ $FORK == 1 ]; then wget -O vendor/silverstripe/framework/src/Dev/SapphireTest.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/SapphireTest.php; fi
+  - if [ $FORK == 1 ]; then wget -O vendor/silverstripe/framework/src/Dev/FunctionalTest.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/FunctionalTest.php; fi
+  - if [ $FORK == 1 ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/SSListContains.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/SSListContains.php; fi
+  - if [ $FORK == 1 ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/SSListContainsOnly.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/SSListContainsOnly.php; fi
+  - if [ $FORK == 1 ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/SSListContainsOnlyMatchingItems.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/SSListContainsOnlyMatchingItems.php; fi
+  - if [ $FORK == 1 ]; then wget -O vendor/silverstripe/framework/src/Dev/Constraint/ViewableDataContains.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/src/Dev/Constraint/ViewableDataContains.php; fi
   #
   #
 
