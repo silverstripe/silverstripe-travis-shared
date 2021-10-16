@@ -90,7 +90,6 @@ before_script:
   # if they have carets in their version contraint
   - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update $REQUIRE_EXTRA; fi
   - if [[ $COW_TEST && -f .cow.json ]]; then composer require --no-update silverstripe/cow dev-master $COMPOSER_INSTALL_ARG; fi
-  
       
   # TMP - phpunit9 upgrade, remove once framework PR is merged https://github.com/silverstripe/silverstripe-framework/pull/10028
   - echo "TRAVIS_PULL_REQUEST_BRANCH - $TRAVIS_PULL_REQUEST_BRANCH"
@@ -103,11 +102,15 @@ before_script:
   #
   
   - if [[ $(composer validate 2>&1 | tr '\n' ' ') =~ ' is valid' ]]; then cat composer.json; fi
-  # Note: have changed --prefer-source to --prefer-dist in order otherwise older silverstripe vendor modules that still have the phpunit5 setUp() signature
-  # without :void will get loaded and fatal PHP errors will be thrown.  There will still be some uses cases such as recipes that run phpunit on modules
-  # in the vendor folder that will need to be treated seperately
-  - composer update --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
+  
+  # Istall with --prefer-source to ensure that admin javascript (which has export-ignore in .gitattributes) is installed so that NPM_TEST works properly
+  - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
   - composer show
+  
+  # Remove vendor tests folders that were installed because of the use of --prefer-source
+  # Some older silverstripe vendor modules may still have the phpunit5 setUp() signatures without :void which when loaded will throw fatal PHP errors.
+  # NOTE: Still a work in progress - there will still be some uses cases such as recipes that run phpunit on modules in the vendor folder that will need to be treated seperately
+  php -r 'foreach(glob("vendor/**/tests") as $f)shell_exec("rm -rf $f");'
 
   # TMP - phpunit9 upgrade, remove once framework PR is merged https://github.com/silverstripe/silverstripe-framework/pull/10028
   #
