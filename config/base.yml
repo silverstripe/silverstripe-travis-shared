@@ -110,7 +110,7 @@ before_script:
   # Remove vendor tests folders that were installed because of the use of --prefer-source
   # Some older silverstripe vendor modules may still have the phpunit5 setUp() signatures without :void which when loaded will throw fatal PHP errors.
   # NOTE: Still a work in progress - there will still be some uses cases such as recipes that run phpunit on modules in the vendor folder that will need to be treated seperately
-  php -r 'foreach(glob("vendor/**/tests") as $f)shell_exec("rm -rf $f");'
+  - php -r 'foreach(glob("vendor/**/tests") as $f)shell_exec("rm -rf $f");'
 
   # TMP - phpunit9 upgrade, remove once framework PR is merged https://github.com/silverstripe/silverstripe-framework/pull/10028
   #
