@@ -101,9 +101,12 @@ before_script:
   #
   #
   
-  - if [[ $(composer validate 2>&1 | tr '\n' ' ') =~ ' is valid' ]]; then cat composer.json; fi
+  # Ensure composer.json has prefer-stable true and minimum-stability dev
+  php -r '$j=json_decode(file_get_contents("composer.json"));$j->{"prefer-stable"}=true;$j->{"minimum-stability"}="dev";file_put_contents("composer.json",json_encode($j,192));'
   
-  # Istall with --prefer-source to ensure that admin javascript (which has export-ignore in .gitattributes) is installed so that NPM_TEST works properly
+  - if [[ $(composer validate 2>&1 | tr '\n' ' ') =~ ' is valid' ]]; then cat composer.json; fi
+    
+  # Install with --prefer-source to ensure that admin javascript (which has export-ignore in .gitattributes) is installed so that NPM_TEST works properly
   - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
   - composer show
   
