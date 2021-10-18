@@ -116,7 +116,7 @@ before_script:
   # Also remove a few other file that don't match the *Test.php convention and extends SapphireTest
   - if [ -f vendor/silverstripe/assets/tests/php/FilenameParsing/FileIDHelperTester.php ]; then rm vendor/silverstripe/assets/tests/php/FilenameParsing/FileIDHelperTester.php; fi
   - if [ -f vendor/silverstripe/framework/tests/php/Forms/NullableFieldTests.php ]; then rm vendor/silverstripe/framework/tests/php/Forms/NullableFieldTests.php; fi
-  - if [ -f vendor/silverstripe/graphql/tests/Middleware/MiddlewareProcessTestBase.php ]; then rm graphql/tests/Middleware/MiddlewareProcessTestBase.php; fi
+  - if [ -f vendor/silverstripe/graphql/tests/Middleware/MiddlewareProcessTestBase.php ]; then rm vendor/silverstripe/graphql/tests/Middleware/MiddlewareProcessTestBase.php; fi
   # Rebuild composer classloader
   - composer dumpautoload -o
   
