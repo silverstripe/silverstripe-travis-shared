@@ -1,24 +1,28 @@
+# These jobs used to have an ascending REQUIRE_INSTALLER 4.7.x-dev, 4.8.x-dev, 4.9.x-dev, 4.x-dev
+# Because phpunit9 requires framework ^4.10 (unreleased), the minimum compatible recipe is now 4.x-dev
+# 4.10.x-dev should be added to the first job when that branch has been created
+# 4.11.x-dev and subsequent versions should be added as branches for those are also created
 jobs:
   fast_finish: true
   include:
     - php: 7.3
       env:
         - DB=MYSQL
-        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.7.x-dev"
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.x-dev"
         - PHPUNIT_TEST=1
         - PHPCS_TEST=1
         - PHPSTAN_TEST=1
     - php: 7.3
       env:
         - DB=PGSQL
-        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.8.x-dev"
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.x-dev"
         - PHPUNIT_TEST=1
         - COW_TEST=1
     - php: 7.4
       env:
         - DB=MYSQL
         - PDO=1
-        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.9.x-dev"
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.x-dev"
         - PHPUNIT_COVERAGE_TEST=1
     - php: 7.4
       env:
