@@ -111,7 +111,7 @@ before_script:
   # Some older silverstripe vendor modules may still have the phpunit5 setUp() signatures without :void which when loaded will throw fatal PHP errors.
   # We cannot simply get rid of the 'tests' folders because behat requires vendor/silverstripe/[framework|cms]/tests/behat/serve-bootstrap.php
   # NOTE: Still a work in progress - there will still be some uses cases such as recipes that run phpunit on modules in the vendor folder that will need to be treated seperately
-  - php -r 'foreach (explode("\n", shell_exec("find vendor/silverstripe | grep [a-zA-Z0-9]Test.php")) as $f) { unlink($f); }'
+  - php -r 'foreach (["silverstripe", "cwp", "symbiote", "dnadesign", "tractorcow", "bringyourownideas", "colymba"] as $v) { if (!is_dir("vendor/$v")) continue; foreach (explode("\n", shell_exec("find vendor/$v | grep [a-zA-Z0-9]Test.php")) as $f) { unlink($f); } }'
   # Also remove '*TestBase.php' files that extend SapphireTest
   - php -r 'foreach (explode("\n", shell_exec("find vendor/silverstripe | grep TestBase.php")) as $f) { unlink($f); }'
 
