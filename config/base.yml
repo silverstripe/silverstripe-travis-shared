@@ -136,10 +136,10 @@ before_script:
   
   # TMP - phpunit9 upgrade, remove once behat-extension PR is merged https://github.com/silverstripe/silverstripe-behat-extension/pull/205
   #
-  - if [ $FORK == 1 && "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/behat-extensuin/src/Context/BasicContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-behat-extension/pulls/4/sapphire-test-nine/src/Context/BasicContext.php; fi
-  - if [ $FORK == 1 && "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/behat-extensuin/src/Context/EmailContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-behat-extension/pulls/4/sapphire-test-nine/src/Context/EmailContext.php; fi
-  - if [ $FORK == 1 && "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/behat-extensuin/src/Context/FixtureContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-behat-extension/pulls/4/sapphire-test-nine/src/Context/FixtureContext.php; fi
-  - if [ $FORK == 1 && "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/behat-extensuin/src/Context/LoginContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-behat-extension/pulls/4/sapphire-test-nine/src/Context/LoginContext.php; fi
+  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/behat-extensuin/src/Context/BasicContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-behat-extension/pulls/4/sapphire-test-nine/src/Context/BasicContext.php; fi
+  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/behat-extensuin/src/Context/EmailContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-behat-extension/pulls/4/sapphire-test-nine/src/Context/EmailContext.php; fi
+  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/behat-extensuin/src/Context/FixtureContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-behat-extension/pulls/4/sapphire-test-nine/src/Context/FixtureContext.php; fi
+  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/behat-extensuin/src/Context/LoginContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-behat-extension/pulls/4/sapphire-test-nine/src/Context/LoginContext.php; fi
   #
   #
   
