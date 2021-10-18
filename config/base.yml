@@ -114,6 +114,7 @@ before_script:
   - php -r 'foreach (["silverstripe", "cwp", "symbiote", "dnadesign", "tractorcow", "bringyourownideas", "colymba"] as $v) { $d = "vendor/$v"; if (!is_dir($d)) continue; foreach (explode("\n", shell_exec("find $d | grep \/tests\/ | grep [a-zA-Z0-9]Test.php")) as $f) { if (is_file($f)) unlink($f); } }'
   # Also remove '*TestBase.php' files that extend SapphireTest
   - php -r 'foreach (explode("\n", shell_exec("find vendor/silverstripe | grep TestBase.php")) as $f) { if (is_file($f)) unlink($f); }'
+  - composer dumpautoload -o
 
   # TMP - phpunit9 upgrade, remove once framework PR is merged https://github.com/silverstripe/silverstripe-framework/pull/10028
   #
