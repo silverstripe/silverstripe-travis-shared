@@ -96,10 +96,14 @@ before_script:
   - echo "TRAVIS_REPO_SLUG - $TRAVIS_REPO_SLUG"
   - FORK=0
   - if [[ $TRAVIS_PULL_REQUEST_BRANCH =~ sapphire-test-nine ]] && ! [[ $TRAVIS_REPO_SLUG =~ silverstripe-framework ]]; then FORK=1; fi
+  # Special case for modules like vendor-plugin that don't install framework
+  - if [[ $FORK == 1 && $(php -r 'echo isset(json_decode(file_get_contents("composer.json"))->require->{"silverstripe/framework"})?1:0;') == 0 ]]; then FORK=0; fi
   - echo "FORK - $FORK"
-  - if [ $FORK == 1 ]; then php -r "\$j=json_decode(file_get_contents('composer.json'));\$j->replace=json_decode('{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\":\"*\"}');file_put_contents('composer.json', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi
-  #
-  #
+  
+  # Prevent older required modules that still have sminnee/phpunit from installing it
+  # while at the same time still letting it install on old branches e.g. 4.9 and below
+  - PHPUNIT9=$(php -r 'echo (json_decode(file_get_contents("composer.json"))->{"require-dev"}->{"phpunit/phpunit"}??"")=="^9"?1:0;')
+  - if [ $PHPUNIT9 == 1 ]; then php -r "\$j=json_decode(file_get_contents('composer.json'));\$j->replace=json_decode('{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\":\"*\"}');file_put_contents('composer.json', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi
   
   # Ensure composer.json has prefer-stable true and minimum-stability dev
   - php -r '$j=json_decode(file_get_contents("composer.json"));$j->{"prefer-stable"}=true;$j->{"minimum-stability"}="dev";file_put_contents("composer.json",json_encode($j,192));'
