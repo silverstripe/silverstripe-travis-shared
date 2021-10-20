@@ -103,7 +103,7 @@ before_script:
   # TMP - ensure dev-two version of recipe-testing is used - gets complicated because behat jobs e.g. https://github.com/silverstripe/silverstripe-travis-shared/blob/master/config/jobs/self-range-behat.yml
   # will require recipe-testing:^1 and this is still required for old branches 4.9 and less, though newer branches 4.10 and above need dev-two/^2
   # TODO: work out a better conditional once FORK is removed
-  - if [[ $FORK == 1 && "$REQUIRE_RECIPE_TESTING" != '" ]]; then composer require silverstripe/recipe-testing=dev-two --dev --no-update --prefer-dist; fi
+  - if [[ $FORK == 1 && "$REQUIRE_RECIPE_TESTING" != "" ]]; then composer require silverstripe/recipe-testing=dev-two --dev --no-update --prefer-dist; fi
   
   # Prevent older required modules that still have sminnee/phpunit from installing it
   # while at the same time still letting it install on old branches e.g. 4.9 and below
