@@ -124,9 +124,9 @@ before_script:
   # Remove vendor unit tests files that were installed because of the use of --prefer-source
   # Some older silverstripe vendor modules may still have the phpunit5 setUp() signatures without :void which when loaded will throw fatal PHP errors.
   # We cannot simply get rid of the 'tests' folders because behat requires vendor/silverstripe/[framework|cms]/tests/behat/serve-bootstrap.php
-  # NOTE: Still a work in progress - there will still be some uses cases such as recipes that run phpunit on modules in the vendor folder that will need to be treated seperately
+  # Recipes are excluded because the unit tests they run are in the required modules, and there's an assumption they'll require a compatible minor branch of the module
   # Make an exception for 'ExtendTest.php' which is a misnamed TestOnly non-test class
-  - php -r 'foreach (["silverstripe", "cwp", "symbiote", "dnadesign", "tractorcow", "bringyourownideas", "colymba"] as $v) { $d = "vendor/$v"; if (!is_dir($d)) continue; foreach (explode("\n", shell_exec("find $d | grep \/tests\/ | grep [a-zA-Z0-9]Test.php")) as $f) { if (preg_match("#ExtendTest\.php#", $f)) continue; if (is_file($f)) unlink($f); } }'
+  - if ! [[ "$TRAVIS_REPO_SLUG" =~ "silverstripe/recipe" ]] then php -r 'foreach (["silverstripe", "cwp", "symbiote", "dnadesign", "tractorcow", "bringyourownideas", "colymba"] as $v) { $d = "vendor/$v"; if (!is_dir($d)) continue; foreach (explode("\n", shell_exec("find $d | grep \/tests\/ | grep [a-zA-Z0-9]Test.php")) as $f) { if (preg_match("#ExtendTest\.php#", $f)) continue; if (is_file($f)) unlink($f); } }'; fi
   # Also remove a few other file that don't match the *Test.php convention and extends SapphireTest
   - if [ -f vendor/silverstripe/assets/tests/php/FilenameParsing/FileIDHelperTester.php ]; then rm vendor/silverstripe/assets/tests/php/FilenameParsing/FileIDHelperTester.php; fi
   - if [ -f vendor/silverstripe/framework/tests/php/Forms/NullableFieldTests.php ]; then rm vendor/silverstripe/framework/tests/php/Forms/NullableFieldTests.php; fi
