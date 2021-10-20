@@ -96,9 +96,10 @@ before_script:
   - echo "TRAVIS_REPO_SLUG - $TRAVIS_REPO_SLUG"
   - FORK=0
   - if [[ $TRAVIS_PULL_REQUEST_BRANCH =~ sapphire-test-nine ]] && ! [[ $TRAVIS_REPO_SLUG =~ silverstripe-framework ]]; then FORK=1; fi
-  # Special case for modules like vendor-plugin that don't install framework
-  - if [[ $FORK == 1 && $(php -r 'echo isset(json_decode(file_get_contents("composer.json"))->require->{"silverstripe/framework"})?1:0;') == 0 ]]; then FORK=0; fi
   - echo "FORK - $FORK"
+
+  # TMP - ensure framework is installed on all fork modules, even on ones like vendor-plugin that don't require it
+  - if [ $FORK == 1 ]; then composer require silverstripe/framework=^4.10 --no-update --prefer-source ;fi
   
   # TMP - ensure dev-two version of recipe-testing is used - gets complicated because behat jobs e.g. https://github.com/silverstripe/silverstripe-travis-shared/blob/master/config/jobs/self-range-behat.yml
   # will require recipe-testing:^1 and this is still required for old branches 4.9 and less, though newer branches 4.10 and above need dev-two/^2
@@ -107,7 +108,7 @@ before_script:
   
   # Prevent older required modules that still have sminnee/phpunit from installing it
   # while at the same time still letting it install on old branches e.g. 4.9 and below
-  - PHPUNIT9=$(php -r 'echo (json_decode(file_get_contents("composer.json"))->{"require-dev"}->{"phpunit/phpunit"}??"")=="^9"?1:0;')
+  - PHPUNIT9=$(php -r '$rd=json_decode(file_get_contents("composer.json"))->{"require-dev"};$pu=$rd->{"phpunit/phpunit"}??"";$rt=$rd->{"silverstripe/recipe-testing"}??"";echo ($pu=="^9"||$rt=="dev-two"||$rt=="^2")?1:0;')
   - if [ $PHPUNIT9 == 1 ]; then php -r "\$j=json_decode(file_get_contents('composer.json'));\$j->replace=json_decode('{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\":\"*\"}');file_put_contents('composer.json', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi
   
   # Ensure composer.json has prefer-stable true and minimum-stability dev
