@@ -99,8 +99,8 @@ before_script:
   - echo "FORK - $FORK"
 
   # TMP - ensure framework is installed on all fork modules, even on ones like vendor-plugin that don't require it
-  - if [[ "$REQUIRE_RECIPE" != "" ]]; then FV="$REQUIRE_RECIPE"; else FV="4.x-dev"; fi
-  - if [[ $FORK == 1 && "$REQUIRE_RECIPE" != "" ]]; then composer require "silverstripe/framework=4.x-dev as $FV" --no-update --prefer-source ;fi
+  - if [[ "$REQUIRE_INSTALLER" != "" ]]; then FV="$REQUIRE_INSTALLER"; else FV="4.x-dev"; fi
+  - if [[ $FORK == 1 && "$REQUIRE_INSTALLER" != "" ]]; then composer require "silverstripe/framework=4.x-dev as $FV" --no-update --prefer-source ;fi
   
   # TMP - ensure dev-two version of recipe-testing is used - gets complicated because behat jobs e.g. https://github.com/silverstripe/silverstripe-travis-shared/blob/master/config/jobs/self-range-behat.yml
   # will require recipe-testing:^1 and this is still required for old branches 4.9 and less, though newer branches 4.10 and above need dev-two/^2
