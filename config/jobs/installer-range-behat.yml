@@ -4,14 +4,14 @@ jobs:
     - php: 7.3
       env:
         - DB=MYSQL
-        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.9.x-dev"
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.x-dev"
         - REQUIRE_RECIPE_TESTING=^1
         - BEHAT_TEST=1
         - REQUIRE_GRAPHQL="^3@dev"
     - php: 7.3
       env:
         - DB=MYSQL
-        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.9.x-dev"
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.x-dev"
         - REQUIRE_RECIPE_TESTING=^1
         - BEHAT_TEST=1
         - REQUIRE_GRAPHQL="^3@dev || 4.x-dev"
