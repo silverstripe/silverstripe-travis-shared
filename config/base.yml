@@ -160,7 +160,7 @@ before_script:
   - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ] && [ -f vendor/dnadesign/silverstripe-elemental/tests/Behat/Context/FeatureContext.php ]; then wget -O vendor/dnadesign/silverstripe-elemental/tests/Behat/Context/FeatureContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-elemental/pulls/4/sapphire-test-nine/tests/Behat/Context/FeatureContext.php; fi
   
   # TMP asset-admin PR - https://github.com/silverstripe/silverstripe-asset-admin/pull/1237
-  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ] && [ -f vendor/dnadesign/silverstripe-asset-admin/tests/behat/src/FixtureContext.php ]; then wget -O vendor/dnadesign/silverstripe-elemental/tests/behat/src/FixtureContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-asset-admin/pulls/4/sapphire-test-nine/tests/behat/src/FixtureContext.php; fi
+  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ] && [ -f vendor/silverstripe/asset-admin/tests/behat/src/FixtureContext.php ]; then wget -O vendor/silverstripe/assert-admin/tests/behat/src/FixtureContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-asset-admin/pulls/4/sapphire-test-nine/tests/behat/src/FixtureContext.php; fi
   
   # NPM
   # This needs to happen after composer update
