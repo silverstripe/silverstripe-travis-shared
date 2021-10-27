@@ -136,11 +136,6 @@ before_script:
   # Rebuild composer classloader
   - composer dumpautoload -o
   
-  # TMP cms PR remove when merged - https://github.com/silverstripe/silverstripe-admin/pull/1259
-  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/cms/tests/behat/src/FixtureContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-cms/pulls/4/sapphire-test-nine/tests/behat/src/FixtureContext.php; fi
-  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/cms/tests/behat/src/LoginContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-cms/pulls/4/sapphire-test-nine/tests/behat/src/LoginContext.php; fi
-  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/cms/tests/behat/src/ThemeContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-cms/pulls/4/sapphire-test-nine/tests/behat/src/ThemeContext.php; fi
-  
   # TMP elemental PR remove when merged - https://github.com/silverstripe/silverstripe-elemental/pull/941 (this is used by elemental-banner-block)
   - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ] && [ -f vendor/dnadesign/silverstripe-elemental/tests/Behat/Context/FeatureContext.php ]; then wget -O vendor/dnadesign/silverstripe-elemental/tests/Behat/Context/FeatureContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-elemental/pulls/4/sapphire-test-nine/tests/Behat/Context/FeatureContext.php; fi
   
