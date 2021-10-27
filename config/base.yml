@@ -136,11 +136,6 @@ before_script:
   # Rebuild composer classloader
   - composer dumpautoload -o
   
-  # TMP - phpunit9 upgrade, remove once framework PR is merged https://github.com/silverstripe/silverstripe-framework/pull/10028
-  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/framework/tests/behat/src/CmsFormsContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/tests/behat/src/CmsFormsContext.php; fi
-  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/framework/tests/behat/src/CmsUiContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/tests/behat/src/CmsUiContext.php; fi
-  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/framework/tests/behat/src/ConfigContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-framework/pulls/4/sapphire-test-nine/tests/behat/src/ConfigContext.php; fi
-  
   # TMP also cms PR - https://github.com/silverstripe/silverstripe-admin/pull/1259
   - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/cms/tests/behat/src/FixtureContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-cms/pulls/4/sapphire-test-nine/tests/behat/src/FixtureContext.php; fi
   - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ]; then wget -O vendor/silverstripe/cms/tests/behat/src/LoginContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-cms/pulls/4/sapphire-test-nine/tests/behat/src/LoginContext.php; fi
