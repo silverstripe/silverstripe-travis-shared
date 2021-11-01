@@ -135,10 +135,7 @@ before_script:
   - if [ $RECIPE == 0 ] && [ -f vendor/silverstripe/graphql/tests/Middleware/MiddlewareProcessTestBase.php ]; then rm vendor/silverstripe/graphql/tests/Middleware/MiddlewareProcessTestBase.php; fi
   # Rebuild composer classloader
   - composer dumpautoload -o
-  
-  # TMP elemental PR remove when merged - https://github.com/silverstripe/silverstripe-elemental/pull/941 (this is used by elemental-banner-block)
-  - if [ $FORK == 1 ] && [ "$BEHAT_TEST" != "" ] && [ -f vendor/dnadesign/silverstripe-elemental/tests/Behat/Context/FeatureContext.php ]; then wget -O vendor/dnadesign/silverstripe-elemental/tests/Behat/Context/FeatureContext.php https://raw.githubusercontent.com/creative-commoners/silverstripe-elemental/pulls/4/sapphire-test-nine/tests/Behat/Context/FeatureContext.php; fi
-  
+    
   # NPM
   # This needs to happen after composer update
   - if [[ -d vendor/silverstripe/admin ]]; then admin_installed=1; else admin_installed=0; fi
