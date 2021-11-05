@@ -1,20 +1,20 @@
 jobs:
   fast_finish: true
   include:
-    - php: 7.1
+    - php: 7.3
       env:
         - DB=MYSQL
         - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE"
         - PHPUNIT_TEST=1
         - PHPCS_TEST=1
         - PHPSTAN_TEST=1
-    - php: 7.2
+    - php: 7.3
       env:
         - DB=MYSQL
         - REQUIRE_CWP_CWP_RECIPE_CMS="$REQUIRE_RECIPE"
         - PHPUNIT_TEST=1
         - COW_TEST=1
-    - php: 7.3
+    - php: 7.4
       env:
         - DB=MYSQL
         - PDO=1
