@@ -90,28 +90,21 @@ before_script:
   # if they have carets in their version contraint
   - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update $REQUIRE_EXTRA; fi
   - if [[ $COW_TEST && -f .cow.json ]]; then composer require --no-update silverstripe/cow dev-master $COMPOSER_INSTALL_ARG; fi
-      
-  # TMP - phpunit9 upgrade, remove once framework PR is merged https://github.com/silverstripe/silverstripe-framework/pull/10028
-  - echo "TRAVIS_PULL_REQUEST_BRANCH - $TRAVIS_PULL_REQUEST_BRANCH"
-  - echo "TRAVIS_REPO_SLUG - $TRAVIS_REPO_SLUG"
-  - FORK=0
-  - if [[ $TRAVIS_PULL_REQUEST_BRANCH =~ sapphire-test-nine ]] && ! [[ $TRAVIS_REPO_SLUG =~ silverstripe-framework ]]; then FORK=1; fi
-  - echo "FORK - $FORK"
-
-  # TMP - ensure framework is installed on all fork modules, even on ones like vendor-plugin that don't require it
+        
+  # Ensure framework is installed, even on modules like vendor-plugin that don't require it
   - if [[ "$REQUIRE_INSTALLER" != "" ]]; then FV="$REQUIRE_INSTALLER"; else FV="4.x-dev"; fi
   - if [[ $FORK == 1 && "$REQUIRE_INSTALLER" != "" && "$REQUIRE_INSTALLER" != "*" ]]; then composer require "silverstripe/framework=4.x-dev as $FV" --no-update --prefer-source ;fi
-  
-  # TMP - ensure ^2version of recipe-testing is used - gets complicated because behat jobs e.g. https://github.com/silverstripe/silverstripe-travis-shared/blob/master/config/jobs/self-range-behat.yml
-  # will require recipe-testing:^1 and this is still required for old branches 4.9 and less, though newer branches 4.10 and above need ^2
-  # TODO: work out a better conditional once FORK is removed
-  - if [[ $FORK == 1 && "$REQUIRE_RECIPE_TESTING" != "" ]]; then composer require silverstripe/recipe-testing=^2 --dev --no-update --prefer-dist; fi
-  
+   
   # Prevent older required modules that still have sminnee/phpunit from installing it
   # while at the same time still letting it install on old branches e.g. 4.9 and below
   - PHPUNIT9=$(php -r '$rd=json_decode(file_get_contents("composer.json"))->{"require-dev"};$pu=$rd->{"phpunit/phpunit"}??"";$rt=$rd->{"silverstripe/recipe-testing"}??"";echo ($pu=="^9"||$pu=="^9.5"||$rt=="dev-two"||$rt=="^2")?1:0;')
   - if [ $PHPUNIT9 == 1 ]; then php -r "\$j=json_decode(file_get_contents('composer.json'));\$j->replace=json_decode('{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\":\"*\"}');file_put_contents('composer.json', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi
   
+  # Ensure ^2 version of recipe-testing is used for phpunit9
+  # https://github.com/silverstripe/silverstripe-travis-shared/blob/master/config/jobs/self-range-behat.yml
+  # will require recipe-testing:^1 and this is still required for old branches 4.9 and less, though newer branches 4.10 and above need ^2
+  - if [[ $PHPUNIT9 == 1 && "$REQUIRE_RECIPE_TESTING" != "" ]]; then composer require silverstripe/recipe-testing=^2 --dev --no-update --prefer-dist; fi
+
   # Ensure composer.json has prefer-stable true and minimum-stability dev
   - php -r '$j=json_decode(file_get_contents("composer.json"));$j->{"prefer-stable"}=true;$j->{"minimum-stability"}="dev";file_put_contents("composer.json",json_encode($j,192));'
   
