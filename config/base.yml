@@ -93,11 +93,12 @@ before_script:
         
   # Ensure framework is installed, even on modules like vendor-plugin that don't require it
   - if [[ "$REQUIRE_INSTALLER" != "" ]]; then FV="$REQUIRE_INSTALLER"; else FV="4.x-dev"; fi
-  - if [[ $FORK == 1 && "$REQUIRE_INSTALLER" != "" && "$REQUIRE_INSTALLER" != "*" ]]; then composer require "silverstripe/framework=4.x-dev as $FV" --no-update --prefer-source ;fi
+  - if [[ "$REQUIRE_INSTALLER" != "" && "$REQUIRE_INSTALLER" != "*" ]]; then composer require "silverstripe/framework=4.x-dev as $FV" --no-update --prefer-source ;fi
    
   # Prevent older required modules that still have sminnee/phpunit from installing it
   # while at the same time still letting it install on old branches e.g. 4.9 and below
   - PHPUNIT9=$(php -r '$rd=json_decode(file_get_contents("composer.json"))->{"require-dev"};$pu=$rd->{"phpunit/phpunit"}??"";$rt=$rd->{"silverstripe/recipe-testing"}??"";echo ($pu=="^9"||$pu=="^9.5"||$rt=="dev-two"||$rt=="^2")?1:0;')
+  - echo "PHPUNIT9 is $PHPUNIT9"
   - if [ $PHPUNIT9 == 1 ]; then php -r "\$j=json_decode(file_get_contents('composer.json'));\$j->replace=json_decode('{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\":\"*\"}');file_put_contents('composer.json', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi
   
   # Ensure ^2 version of recipe-testing is used for phpunit9
