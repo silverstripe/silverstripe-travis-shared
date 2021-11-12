@@ -73,6 +73,12 @@ before_script:
   - if [ $COMPOSER_VERSION ]; then composer self-update "$COMPOSER_VERSION"; elif [ $(php -r 'echo (int) version_compare(phpversion(), "7.3.0", "<=");') = "1" ]; then composer self-update 1.9.3; else composer self-update; fi
   - composer --version
   - composer validate
+  - PHPUNIT9=$(php -r '$rd=json_decode(file_get_contents("composer.json"))->{"require-dev"};$pu=$rd->{"phpunit/phpunit"}??"";$rt=$rd->{"silverstripe/recipe-testing"}??"";echo ($pu=="^9"||$pu=="^9.5"||$rt=="dev-two"||$rt=="^2")?1:0;')
+  - echo "PHPUNIT9 is $PHPUNIT9"
+  # Ensure ^2 version of recipe-testing is used for phpunit9
+  # https://github.com/silverstripe/silverstripe-travis-shared/blob/master/config/jobs/self-range-behat.yml
+  # will require recipe-testing:^1 and this is still required for old branches 4.9 and less, though newer branches 4.10 and above need ^2
+  - if [[ $PHPUNIT9 == 1 && "$REQUIRE_RECIPE_TESTING" != "" ]]; then composer require silverstripe/recipe-testing=^2 --dev --no-update --prefer-dist; fi
   - if [[ $DB == PGSQL && $(php -r 'echo json_decode(file_get_contents("composer.json"))->name;') != "silverstripe/postgresql" ]]; then composer require --no-update silverstripe/postgresql:^2 --no-update --prefer-dist; fi
   - if [[ $BEHAT_TEST ]]; then composer require --no-update silverstripe/behat-extension:^4 silverstripe/serve:^2  --prefer-dist; fi;
   - if [[ $REQUIRE_RECIPE_CORE ]]; then composer require silverstripe/recipe-core="$REQUIRE_RECIPE_CORE" --no-update --prefer-dist; fi
@@ -97,14 +103,7 @@ before_script:
    
   # Prevent older required modules that still have sminnee/phpunit from installing it
   # while at the same time still letting it install on old branches e.g. 4.9 and below
-  - PHPUNIT9=$(php -r '$rd=json_decode(file_get_contents("composer.json"))->{"require-dev"};$pu=$rd->{"phpunit/phpunit"}??"";$rt=$rd->{"silverstripe/recipe-testing"}??"";echo ($pu=="^9"||$pu=="^9.5"||$rt=="dev-two"||$rt=="^2")?1:0;')
-  - echo "PHPUNIT9 is $PHPUNIT9"
   - if [ $PHPUNIT9 == 1 ]; then php -r "\$j=json_decode(file_get_contents('composer.json'));\$j->replace=json_decode('{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\":\"*\"}');file_put_contents('composer.json', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi
-  
-  # Ensure ^2 version of recipe-testing is used for phpunit9
-  # https://github.com/silverstripe/silverstripe-travis-shared/blob/master/config/jobs/self-range-behat.yml
-  # will require recipe-testing:^1 and this is still required for old branches 4.9 and less, though newer branches 4.10 and above need ^2
-  - if [[ $PHPUNIT9 == 1 && "$REQUIRE_RECIPE_TESTING" != "" ]]; then composer require silverstripe/recipe-testing=^2 --dev --no-update --prefer-dist; fi
 
   # Ensure composer.json has prefer-stable true and minimum-stability dev
   - php -r '$j=json_decode(file_get_contents("composer.json"));$j->{"prefer-stable"}=true;$j->{"minimum-stability"}="dev";file_put_contents("composer.json",json_encode($j,192));'
