@@ -75,6 +75,8 @@ before_script:
   - composer validate
   - PHPUNIT9=$(php -r '$rd=json_decode(file_get_contents("composer.json"))->{"require-dev"};$pu=$rd->{"phpunit/phpunit"}??"";$rt=$rd->{"silverstripe/recipe-testing"}??"";echo ($pu=="^9"||$pu=="^9.5"||$rt=="dev-two"||$rt=="^2")?1:0;')
   - echo "PHPUNIT9 is $PHPUNIT9"
+  - RT2=$(php -r '$rd=json_decode(file_get_contents("composer.json"))->{"require-dev"};$rt=$rd->{"silverstripe/recipe-testing"}??"";echo $rt=="^2"?1:0;')
+  - echo "RT2 is $RT2"
   # Ensure ^2 version of recipe-testing is used for phpunit9
   # https://github.com/silverstripe/silverstripe-travis-shared/blob/master/config/jobs/self-range-behat.yml
   # will require recipe-testing:^1 and this is still required for old branches 4.9 and less, though newer branches 4.10 and above need ^2
@@ -84,7 +86,7 @@ before_script:
   - if [[ $REQUIRE_RECIPE_CORE ]]; then composer require silverstripe/recipe-core="$REQUIRE_RECIPE_CORE" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_CWP_CWP_RECIPE_CMS ]]; then composer require cwp/cwp-recipe-cms="$REQUIRE_CWP_CWP_RECIPE_CMS" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_INSTALLER ]]; then composer require silverstripe/installer="$REQUIRE_INSTALLER" --no-update --prefer-dist; fi
-  - if [[ $REQUIRE_RECIPE_TESTING ]]; then composer require silverstripe/recipe-testing="$REQUIRE_RECIPE_TESTING" --dev --no-update --prefer-dist; fi
+  - if [[ $REQUIRE_RECIPE_TESTING ]] && [ $RT2 == 0 ]; then composer require silverstripe/recipe-testing="$REQUIRE_RECIPE_TESTING" --dev --no-update --prefer-dist; fi
   - if [[ $REQUIRE_FRAMEWORKTEST ]]; then composer require silverstripe/frameworktest="$REQUIRE_FRAMEWORKTEST" --dev --no-update --prefer-dist; fi
   - if [[ $REQUIRE_CWP_STARTER_THEME ]]; then composer require cwp/starter-theme="$REQUIRE_CWP_STARTER_THEME" --no-update --prefer-dist; fi
   # $REQUIRE_GRAPHQL needs to happen BEFORE $REQUIRE_EXTRA so that graphql 4 is more likely to install to increase
