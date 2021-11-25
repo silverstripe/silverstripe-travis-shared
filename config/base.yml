@@ -98,11 +98,7 @@ before_script:
   # if they have carets in their version contraint
   - if [[ $REQUIRE_EXTRA ]] ; then composer require --no-update $REQUIRE_EXTRA; fi
   - if [[ $COW_TEST && -f .cow.json ]]; then composer require --no-update silverstripe/cow dev-master $COMPOSER_INSTALL_ARG; fi
-        
-  # Ensure framework is installed, even on modules like vendor-plugin that don't require it
-  - if [[ "$REQUIRE_INSTALLER" != "" ]]; then FV="$REQUIRE_INSTALLER"; else FV="4.x-dev"; fi
-  - if [[ "$REQUIRE_INSTALLER" != "" && "$REQUIRE_INSTALLER" != "*" && "$TRAVIS_REPO_SLUG" != "silverstripe/silverstripe-framework" ]]; then composer require "silverstripe/framework=4.x-dev as $FV" --no-update --prefer-source ;fi
-   
+
   # Prevent older required modules that still have sminnee/phpunit from installing it
   # while at the same time still letting it install on old branches e.g. 4.9 and below
   - if [ $PHPUNIT9 == 1 ]; then php -r "\$j=json_decode(file_get_contents('composer.json'));\$j->replace=json_decode('{\"sminnee/phpunit\":\"*\",\"sminnee/phpunit-mock-objects\":\"*\"}');file_put_contents('composer.json', json_encode(\$j, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES));"; fi
