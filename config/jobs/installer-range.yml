@@ -8,21 +8,21 @@ jobs:
     - php: 7.3
       env:
         - DB=MYSQL
-        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.x-dev"
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.10.x-dev"
         - PHPUNIT_TEST=1
         - PHPCS_TEST=1
         - PHPSTAN_TEST=1
     - php: 7.3
       env:
         - DB=PGSQL
-        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.x-dev"
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.10.x-dev"
         - PHPUNIT_TEST=1
         - COW_TEST=1
     - php: 7.4
       env:
         - DB=MYSQL
         - PDO=1
-        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.x-dev"
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.10.x-dev"
         - PHPUNIT_COVERAGE_TEST=1
     - php: 7.4
       env:
