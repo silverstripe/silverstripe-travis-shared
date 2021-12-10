@@ -42,6 +42,17 @@ before_script:
   # $TRAVIS_BRANCH documentation - https://docs.travis-ci.com/user/environment-variables/#default-environment-variables
   - if [[ "$TRAVIS_BRANCH" =~ ^[1-9]$ ]] || [[ "$TRAVIS_BRANCH" =~ ^[1-9]\.[0-9]+$ ]]; then export COMPOSER_ROOT_VERSION="${TRAVIS_BRANCH}.x-dev"; elif [[ "$TRAVIS_BRANCH" =~ ^[1-9]\.[0-9]+\.[0-9]+ ]]; then export COMPOSER_ROOT_VERSION="${TRAVIS_BRANCH}"; else export COMPOSER_ROOT_VERSION="dev-${TRAVIS_BRANCH}"; fi
   - echo "$COMPOSER_ROOT_VERSION"
+  
+  # Static definition of INSTALLER_CURRENT_MINOR
+  # Important! This needs to be updated after a new minor branch of silverstripe/installer is created!
+  # This should include the .x-dev suffix e.g. "4.10.x-dev"
+  - INSTALLER_CURRENT_MINOR="4.10.x-dev"
+  
+  # Dynamically work out REQUIRE_RECIPE, which is particularly important for running builds on minor branches of 
+  # modules included in silverstripe/installer e.g. silverstripe/session-manager
+  # Doing this means we don't need to statically define REQUIRE_RECIPE in the modules .travis.yml and keep it up to date after every minor release
+  - if [ "$REQUIRE_RECIPE" == "" ]; then if [[ "$COMPOSER_ROOT_VERSION" =~ ^[1-9]\.[0-9]*\.x-dev$ ]]; then REQUIRE_RECIPE="$INSTALLER_CURRENT_MINOR"; echo "Dynamically set REQUIRE_RECIPE to INSTALLER_CURRENT_MINOR $REQUIRE_RECIPE"; else REQUIRE_RECIPE="4.x-dev"; echo "Dynamically set REQUIRE_RECIPE to 4.x-dev"; fi; else echo "Using module set REQUIRE_RECIPE of $REQUIRE_RECIPE"; fi
+    
 
   # BEHAT
   # Remove preinstalled Chrome (google-chrome)
