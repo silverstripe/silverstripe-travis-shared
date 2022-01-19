@@ -97,7 +97,7 @@ before_script:
   - if [[ $REQUIRE_RECIPE_CORE ]]; then composer require silverstripe/recipe-core="$REQUIRE_RECIPE_CORE" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_CWP_CWP_RECIPE_CMS ]]; then composer require cwp/cwp-recipe-cms="$REQUIRE_CWP_CWP_RECIPE_CMS" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_INSTALLER ]]; then composer require silverstripe/installer="$REQUIRE_INSTALLER" --no-update --prefer-dist; fi
-  - if [ "$REQUIRE_RECIPE" != "" ] && [ "$REQUIRE_RECIPE_CORE" == "" ] && [ "$REQUIRE_CWP_CWP_RECIPE_CMS" == "" ] && [ "$REQUIRE_INSTALLER" == "" ]; then composer require silverstripe/installer="$REQUIRE_RECIPE" --no-update --prefer-dist; fi
+  - if [ "$REQUIRE_RECIPE" != "" ] && [ "$REQUIRE_RECIPE_CORE" == "" ] && [ "$REQUIRE_CWP_CWP_RECIPE_CMS" == "" ] && [ "$REQUIRE_INSTALLER" == "" ] && [ $(php -r 'echo json_decode(file_get_contents("composer.json"))->name;') != "silverstripe/installer" ]; then composer require silverstripe/installer="$REQUIRE_RECIPE" --no-update --prefer-dist; fi
   - if [[ $REQUIRE_RECIPE_TESTING ]] && [ $RT2 == 0 ]; then composer require silverstripe/recipe-testing="$REQUIRE_RECIPE_TESTING" --dev --no-update --prefer-dist; fi
   - if [[ $REQUIRE_FRAMEWORKTEST ]]; then composer require silverstripe/frameworktest="$REQUIRE_FRAMEWORKTEST" --dev --no-update --prefer-dist; fi
   - if [[ $REQUIRE_CWP_STARTER_THEME ]]; then composer require cwp/starter-theme="$REQUIRE_CWP_STARTER_THEME" --no-update --prefer-dist; fi
