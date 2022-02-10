@@ -1,7 +1,7 @@
 # Maximum version of php for silverstripe behat is currently 7.3
 jobs:
   include:
-    - php: 7.3
+    - php: 7.4
       env:
         - DB=MYSQL
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
