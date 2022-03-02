@@ -42,17 +42,22 @@ before_script:
   # $TRAVIS_BRANCH documentation - https://docs.travis-ci.com/user/environment-variables/#default-environment-variables
   - if [[ "$TRAVIS_BRANCH" =~ ^[1-9]$ ]] || [[ "$TRAVIS_BRANCH" =~ ^[1-9]\.[0-9]+$ ]]; then export COMPOSER_ROOT_VERSION="${TRAVIS_BRANCH}.x-dev"; elif [[ "$TRAVIS_BRANCH" =~ ^[1-9]\.[0-9]+\.[0-9]+ ]]; then export COMPOSER_ROOT_VERSION="${TRAVIS_BRANCH}"; else export COMPOSER_ROOT_VERSION="dev-${TRAVIS_BRANCH}"; fi
   - echo "$COMPOSER_ROOT_VERSION"
-  
+
   # Static definition of INSTALLER_CURRENT_MINOR
   # Important! This needs to be updated after a new minor branch of silverstripe/installer is created!
   # This should include the .x-dev suffix e.g. "4.10.x-dev"
   - INSTALLER_CURRENT_MINOR="4.10.x-dev"
-  
+
   # Dynamically work out REQUIRE_RECIPE, which is particularly important for running builds on minor branches of 
   # modules included in silverstripe/installer e.g. silverstripe/session-manager
   # Doing this means we don't need to statically define REQUIRE_RECIPE in the modules .travis.yml and keep it up to date after every minor release
   - if [ "$REQUIRE_RECIPE" == "" ]; then if [[ "$COMPOSER_ROOT_VERSION" =~ ^[1-9]\.[0-9]*\.x-dev$ ]]; then REQUIRE_RECIPE="$INSTALLER_CURRENT_MINOR"; echo "Dynamically set REQUIRE_RECIPE to INSTALLER_CURRENT_MINOR $REQUIRE_RECIPE"; else REQUIRE_RECIPE="4.x-dev"; echo "Dynamically set REQUIRE_RECIPE to 4.x-dev"; fi; else echo "Using module set REQUIRE_RECIPE of $REQUIRE_RECIPE"; fi
-    
+
+  # If installer-range.yml has REQUIRE_INSTALLER 4.10.x-dev, and there's a composer requirement for a core lockstepped
+  # module of ^4.11 then update REQUIRE_INSTALLER to 4.x-dev
+  # NOTE: This is hardcoded with the expectation that travis CI will be replaced by github actions CI
+  # before 4.12 starts being a thing
+  - if [ "$REQUIRE_INSTALLER" == " 4.10.x-dev" ]; then REQUIRE_INSTALLER=$(php -r '$ms=explode(" ","silverstripe/framework silverstripe/cms silverstripe/assets silverstripe/admin silverstripe/versioned silverstripe/reports silverstripe/errorpage silverstripe/siteconfig silverstripe/asset-admin silverstripe/versioned-admin silverstripe/campaign-admin");$r=json_decode(file_get_contents("composer.json"))->{"require"};foreach($ms as $m){if(($r->{$m}??0)==="^4.11"){echo "4.x-dev";die;}};echo "4.10.x-dev";'); fi
 
   # BEHAT
   # Remove preinstalled Chrome (google-chrome)
@@ -123,7 +128,7 @@ before_script:
   # Install with --prefer-source to ensure that admin javascript (which has export-ignore in .gitattributes) is installed so that NPM_TEST works properly
   - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
   - composer show
-  
+
   # Remove vendor unit tests files that were installed because of the use of --prefer-source
   # Some older silverstripe vendor modules may still have the phpunit5 setUp() signatures without :void which when loaded will throw fatal PHP errors.
   # We cannot simply get rid of the 'tests' folders because behat requires vendor/silverstripe/[framework|cms]/tests/behat/serve-bootstrap.php
@@ -138,7 +143,7 @@ before_script:
   - if [ $RECIPE == 0 ] && [ -f vendor/silverstripe/graphql/tests/Middleware/MiddlewareProcessTestBase.php ]; then rm vendor/silverstripe/graphql/tests/Middleware/MiddlewareProcessTestBase.php; fi
   # Rebuild composer classloader
   - composer dumpautoload -o
-    
+
   # NPM
   # This needs to happen after composer update
   - if [[ -d vendor/silverstripe/admin ]]; then admin_installed=1; else admin_installed=0; fi
