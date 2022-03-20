@@ -38,9 +38,10 @@ before_script:
   # Dynamically work out COMPOSER_ROOT_VERSION:
   # Numeric branch - 4 / 4.8 => 4.x-dev / 4.8.x-dev
   # Tag - 1.2.3 / 1.2.3-beta1 => 1.2.3 / 1.2.3-beta1
+  # github-actions js-deps workflow 'push' run ('pull-request' run will be fine) - pulls/1/update-js-1647804511 => 1.x-dev
   # Non-numeric branch - master / some-branch => dev-master / dev-some-branch
   # $TRAVIS_BRANCH documentation - https://docs.travis-ci.com/user/environment-variables/#default-environment-variables
-  - if [[ "$TRAVIS_BRANCH" =~ ^[1-9]$ ]] || [[ "$TRAVIS_BRANCH" =~ ^[1-9]\.[0-9]+$ ]]; then export COMPOSER_ROOT_VERSION="${TRAVIS_BRANCH}.x-dev"; elif [[ "$TRAVIS_BRANCH" =~ ^[1-9]\.[0-9]+\.[0-9]+ ]]; then export COMPOSER_ROOT_VERSION="${TRAVIS_BRANCH}"; else export COMPOSER_ROOT_VERSION="dev-${TRAVIS_BRANCH}"; fi
+  - if [[ "$TRAVIS_BRANCH" =~ ^[1-9]$ ]] || [[ "$TRAVIS_BRANCH" =~ ^[1-9]\.[0-9]+$ ]]; then export COMPOSER_ROOT_VERSION="${TRAVIS_BRANCH}.x-dev"; elif [[ "$TRAVIS_BRANCH" =~ ^[1-9]\.[0-9]+\.[0-9]+ ]]; then export COMPOSER_ROOT_VERSION="${TRAVIS_BRANCH}"; elif [[ "$TRAVIS_BRANCH" =~ ^pulls/([0-9\.]+)/.+$ ]]; then export COMPOSER_ROOT_VERSION="${BASH_REMATCH[1]}.x-dev"; else export COMPOSER_ROOT_VERSION="dev-${TRAVIS_BRANCH}"; fi
   - echo "$COMPOSER_ROOT_VERSION"
 
   # Static definition of INSTALLER_CURRENT_MINOR
