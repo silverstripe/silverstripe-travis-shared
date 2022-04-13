@@ -127,7 +127,7 @@ before_script:
   - if [[ $(composer validate 2>&1 | tr '\n' ' ') =~ ' is valid' ]]; then cat composer.json; fi
     
   # Install with --prefer-source to ensure that admin javascript (which has export-ignore in .gitattributes) is installed so that NPM_TEST works properly
-  - composer update --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
+  - composer install --prefer-source --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile $COMPOSER_INSTALL_ARG
   - composer show
 
   # Remove vendor unit tests files that were installed because of the use of --prefer-source
