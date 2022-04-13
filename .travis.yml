@@ -1,0 +1,7 @@
+before_script:
+  - gem install travis --no-document
+  # dismiss travis prompt about autocomplete
+  - echo "y" | travis --version
+script:
+  # validate all the yml files in config dir using travis cli tool
+  - find ./config/ -type f -name '*.yml' | xargs -L 1 travis lint -x
