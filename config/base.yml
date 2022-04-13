@@ -4,6 +4,11 @@ os: linux
 
 dist: bionic
 
+# Ignore branches created by dependabot - these will be tested in the PR build
+branches:
+  except:
+    - /^dependabot\/.*/
+
 # Always install services for postgres + behat because "services"
 # does not "merge" correctly so this cannot be dynamic
 services:
