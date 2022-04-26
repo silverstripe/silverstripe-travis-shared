@@ -175,12 +175,12 @@ before_script:
 
 script:
   # PHPUNIT
-  - if [[ "$PHPUNIT_TEST" != "" && "$PHPUNIT_SUITE" == "" ]]; then vendor/bin/phpunit; fi
-  - if [[ "$PHPUNIT_TEST" != "" && "$PHPUNIT_SUITE" != "" ]]; then vendor/bin/phpunit --testsuite $PHPUNIT_SUITE; fi
+  - if [[ "$PHPUNIT_TEST" != "" && "$PHPUNIT_SUITE" == "" ]]; then vendor/bin/phpunit --fail-on-warning; fi
+  - if [[ "$PHPUNIT_TEST" != "" && "$PHPUNIT_SUITE" != "" ]]; then vendor/bin/phpunit --fail-on-warning --testsuite $PHPUNIT_SUITE; fi
 
   # PHPUNIT_COVERAGE
-  - if [[ "$PHPUNIT_COVERAGE_TEST" != "" && "$PHPUNIT_COVERAGE_SUITE" == "" ]]; then phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml; fi
-  - if [[ "$PHPUNIT_COVERAGE_TEST" != "" && "$PHPUNIT_COVERAGE_SUITE" != "" ]]; then phpdbg -qrr vendor/bin/phpunit --testsuite $PHPUNIT_COVERAGE_SUITE --coverage-clover=coverage.xml; fi
+  - if [[ "$PHPUNIT_COVERAGE_TEST" != "" && "$PHPUNIT_COVERAGE_SUITE" == "" ]]; then phpdbg -qrr vendor/bin/phpunit --fail-on-warning --coverage-clover=coverage.xml; fi
+  - if [[ "$PHPUNIT_COVERAGE_TEST" != "" && "$PHPUNIT_COVERAGE_SUITE" != "" ]]; then phpdbg -qrr vendor/bin/phpunit --fail-on-warning --testsuite $PHPUNIT_COVERAGE_SUITE --coverage-clover=coverage.xml; fi
 
   # BEHAT
   - if [[ $BEHAT_TEST ]]; then vendor/bin/behat $BEHAT_SUITE; fi
