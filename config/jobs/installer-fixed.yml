@@ -32,5 +32,3 @@ jobs:
         - REQUIRE_INSTALLER="$REQUIRE_RECIPE"
         - PHPUNIT_TEST=1
         - REQUIRE_GRAPHQL="^3@dev || 4.x-dev"
-  allow_failures:
-    - php: 8.1.0
