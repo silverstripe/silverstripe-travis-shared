@@ -52,7 +52,7 @@ before_script:
   # Static definition of INSTALLER_CURRENT_MINOR
   # Important! This needs to be updated after a new minor branch of silverstripe/installer is created!
   # This should include the .x-dev suffix e.g. "4.10.x-dev"
-  - INSTALLER_CURRENT_MINOR="4.10.x-dev"
+  - INSTALLER_CURRENT_MINOR="4.11.x-dev"
 
   # Dynamically work out REQUIRE_RECIPE, which is particularly important for running builds on minor branches of 
   # modules included in silverstripe/installer e.g. silverstripe/session-manager

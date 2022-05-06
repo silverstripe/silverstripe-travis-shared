@@ -22,7 +22,7 @@ jobs:
       env:
         - DB=MYSQL
         - PDO=1
-        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.10.x-dev"
+        - REQUIRE_INSTALLER="$REQUIRE_RECIPE 4.11.x-dev"
         - PHPUNIT_COVERAGE_TEST=1
     - php: 8.0
       env:
