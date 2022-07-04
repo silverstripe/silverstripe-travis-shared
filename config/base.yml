@@ -128,9 +128,14 @@ before_script:
 
   # Ensure composer.json has prefer-stable true and minimum-stability dev
   - php -r '$j=json_decode(file_get_contents("composer.json"));$j->{"prefer-stable"}=true;$j->{"minimum-stability"}="dev";file_put_contents("composer.json",json_encode($j,192));'
-  
+
+  # Enable plugins
+  composer config allow-plugins.composer/installers true
+  composer config allow-plugins.silverstripe/recipe-plugin true
+  composer config allow-plugins.silverstripe/vendor-plugin true
+
   - if [[ $(composer validate 2>&1 | tr '\n' ' ') =~ ' is valid' ]]; then cat composer.json; fi
-    
+
   # Install with --prefer-source to ensure that admin javascript (which has export-ignore in .gitattributes) is installed so that NPM_TEST works properly
   # $COMPOSER_INSTALL_ARG is sometimes --prefer-lowest which is only supported by `composer update`, not `composer install`
   # Modules do not have composer.lock files, so `composer update` is the same speed as `composer install`
