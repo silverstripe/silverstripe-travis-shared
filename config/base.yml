@@ -130,9 +130,9 @@ before_script:
   - php -r '$j=json_decode(file_get_contents("composer.json"));$j->{"prefer-stable"}=true;$j->{"minimum-stability"}="dev";file_put_contents("composer.json",json_encode($j,192));'
 
   # Enable plugins
-  composer config allow-plugins.composer/installers true
-  composer config allow-plugins.silverstripe/recipe-plugin true
-  composer config allow-plugins.silverstripe/vendor-plugin true
+  - composer config allow-plugins.composer/installers true
+  - composer config allow-plugins.silverstripe/recipe-plugin true
+  - composer config allow-plugins.silverstripe/vendor-plugin true
 
   - if [[ $(composer validate 2>&1 | tr '\n' ' ') =~ ' is valid' ]]; then cat composer.json; fi
 
