@@ -1,3 +1,9 @@
+# Archived
+
+This repository was previously used for CI by Silverstripe modules. This repository is no longer maintained
+
+This functionality has been replaced by https://github.com/silverstripe/gha-ci and you should now use that instead.
+
 # Silverstripe TravisCI configs
 
 This repository contains the [reusable](https://docs.travis-ci.com/user/build-config-imports/) configuration scripts
